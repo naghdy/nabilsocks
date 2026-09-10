@@ -9,8 +9,6 @@ export default function HomePage() {
     .map((slug) => getProduct(slug))
     .filter((product): product is NonNullable<typeof product> => Boolean(product));
   const heroSock = getProduct("circuit-crew") ?? products[0];
-  const orbit = getProduct("orbit-stripe") ?? products[1];
-  const pulse = getProduct("pulse-ankle") ?? products[2];
 
   return (
     <div>
@@ -43,20 +41,14 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="relative mx-auto h-[420px] w-full max-w-md">
-          <div className="absolute top-4 left-2 float-slower w-28 opacity-80 sm:w-32">
-            <SockPhoto product={orbit} sizes="128px" />
-          </div>
-          <div className="absolute top-16 right-0 float-slow w-24 opacity-85 sm:w-28">
-            <SockPhoto product={pulse} sizes="112px" />
-          </div>
-          <div className="absolute inset-x-16 top-6 sm:inset-x-20">
-            <div className="absolute inset-8 rounded-full bg-cyan/12 blur-3xl" />
+        <div className="relative mx-auto w-full max-w-md">
+          <div className="absolute inset-10 rounded-full bg-cyan/12 blur-3xl" />
+          <div className="relative aspect-[3/4] w-full">
             <SockPhoto
               product={heroSock}
               priority
-              className="relative drop-shadow-[0_0_40px_rgba(34,240,255,0.18)]"
-              sizes="(max-width: 768px) 60vw, 280px"
+              className="drop-shadow-[0_0_40px_rgba(34,240,255,0.16)]"
+              sizes="(max-width: 768px) 80vw, 420px"
             />
           </div>
         </div>
