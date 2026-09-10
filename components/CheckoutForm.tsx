@@ -61,7 +61,11 @@ export function CheckoutForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+    <form
+      onSubmit={onSubmit}
+      onInput={() => setError("")}
+      className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]"
+    >
       <div className="glass space-y-5 rounded-3xl p-5 sm:p-6">
         <p className="rounded-2xl border border-magenta/30 bg-magenta/8 px-4 py-3 text-sm">
           Demo checkout — no charge. Cards are not processed, stored, or sent anywhere.
@@ -93,7 +97,11 @@ export function CheckoutForm() {
             <Field name="cvc" label="CVC" placeholder="123" />
           </div>
         </fieldset>
-        {error ? <p className="text-sm text-magenta">{error}</p> : null}
+        {error ? (
+          <p className="text-sm text-magenta" role="alert">
+            {error}
+          </p>
+        ) : null}
         <button
           type="submit"
           disabled={submitting}
