@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { AgentChat } from "@/components/AgentChat";
 import { ProductCard } from "@/components/ProductCard";
-import { SockVisual } from "@/components/SockVisual";
+import { SockPhoto } from "@/components/SockPhoto";
 import { featuredSlugs, getProduct, products } from "@/lib/products";
 
 export default function HomePage() {
@@ -44,15 +44,20 @@ export default function HomePage() {
         </div>
 
         <div className="relative mx-auto h-[420px] w-full max-w-md">
-          <div className="absolute top-6 left-8 float-slower w-36 opacity-70">
-            <SockVisual product={orbit} />
+          <div className="absolute top-4 left-2 float-slower w-28 opacity-80 sm:w-32">
+            <SockPhoto product={orbit} sizes="128px" />
           </div>
-          <div className="absolute top-20 right-0 float-slow w-32 opacity-80">
-            <SockVisual product={pulse} />
+          <div className="absolute top-16 right-0 float-slow w-24 opacity-85 sm:w-28">
+            <SockPhoto product={pulse} sizes="112px" />
           </div>
-          <div className="absolute inset-x-12 top-10">
+          <div className="absolute inset-x-16 top-6 sm:inset-x-20">
             <div className="absolute inset-8 rounded-full bg-cyan/12 blur-3xl" />
-            <SockVisual product={heroSock} className="relative drop-shadow-[0_0_40px_rgba(34,240,255,0.18)]" />
+            <SockPhoto
+              product={heroSock}
+              priority
+              className="relative drop-shadow-[0_0_40px_rgba(34,240,255,0.18)]"
+              sizes="(max-width: 768px) 60vw, 280px"
+            />
           </div>
         </div>
       </section>

@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { openingMessage, replyTo, starterChips } from "@/lib/agent";
 import { formatPrice } from "@/lib/format";
 import { useCartStore } from "@/lib/store";
-import { SockVisual } from "@/components/SockVisual";
+import { SockPhoto } from "@/components/SockPhoto";
 import type { Product } from "@/lib/types";
 import { useRouter } from "next/navigation";
 
@@ -101,8 +101,8 @@ export function AgentChat({ teaser = false }: { teaser?: boolean }) {
                       key={product.id}
                       className="flex items-center gap-3 rounded-xl border border-white/8 bg-black/30 p-2"
                     >
-                      <div className="h-16 w-12 shrink-0">
-                        <SockVisual product={product} className="h-full w-full" />
+                      <div className="h-16 w-12 shrink-0 overflow-hidden rounded-md bg-black/40">
+                        <SockPhoto product={product} sizes="48px" />
                       </div>
                       <div className="min-w-0 flex-1">
                         <Link

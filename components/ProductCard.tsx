@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { SockVisual } from "@/components/SockVisual";
+import { SockPhoto } from "@/components/SockPhoto";
 import { formatMaterial, formatHeight } from "@/lib/products";
 import { formatPrice } from "@/lib/format";
 import type { Product } from "@/lib/types";
@@ -26,9 +26,9 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
             <span>{formatMaterial(product.material)}</span>
           )}
         </div>
-        <div className="relative mx-auto h-52 w-44">
-          <div className="absolute inset-6 rounded-full bg-cyan/8 blur-2xl transition-opacity group-hover:opacity-100" />
-          <SockVisual product={product} className="relative h-full w-full" />
+        <div className="relative mx-auto aspect-[3/4] w-full max-w-[200px]">
+          <div className="absolute inset-8 rounded-full bg-cyan/8 blur-2xl" />
+          <SockPhoto product={product} className="relative" />
         </div>
         <h2 className="font-display mt-2 text-xl tracking-tight">{product.name}</h2>
         <p className="mt-1 line-clamp-2 text-sm text-muted">{product.tagline}</p>
