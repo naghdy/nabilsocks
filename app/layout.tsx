@@ -59,11 +59,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </a>
         <Atmosphere />
         <CartHydration />
-        <Header />
-        <main id="content" className="flex-1">
-          {children}
-        </main>
-        <Footer />
+        <div className="relative z-10 flex min-h-full flex-1 flex-col">
+          <Header />
+          <main id="content" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
