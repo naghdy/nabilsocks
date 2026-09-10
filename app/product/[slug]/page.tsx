@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AddToCart } from "@/components/AddToCart";
 import { ProductCard } from "@/components/ProductCard";
-import { SockVisual } from "@/components/SockVisual";
+import { SockPhoto } from "@/components/SockPhoto";
 import { formatPrice } from "@/lib/format";
 import { formatHeight, formatMaterial, getProduct, products } from "@/lib/products";
 import type { Product } from "@/lib/types";
@@ -51,13 +51,15 @@ export default async function ProductPage({ params }: Props) {
       </p>
 
       <div className="mt-6 grid items-start gap-10 lg:grid-cols-2">
-        <div className="glass relative overflow-hidden rounded-3xl px-6 py-10">
+        <div className="glass relative overflow-hidden rounded-3xl px-4 py-8 sm:px-8">
           <div className="absolute inset-10 rounded-full bg-cyan/10 blur-3xl" />
-          <SockVisual
-            product={product}
-            decorative={false}
-            className="relative mx-auto h-[380px] w-[300px]"
-          />
+          <div className="relative mx-auto aspect-[3/4] w-full max-w-md">
+            <SockPhoto
+              product={product}
+              priority
+              sizes="(max-width: 1024px) 90vw, 480px"
+            />
+          </div>
         </div>
 
         <div>

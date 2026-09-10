@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { AgentChat } from "@/components/AgentChat";
 import { ProductCard } from "@/components/ProductCard";
-import { SockVisual } from "@/components/SockVisual";
+import { SockPhoto } from "@/components/SockPhoto";
 import { featuredSlugs, getProduct, products } from "@/lib/products";
 
 export default function HomePage() {
@@ -9,8 +9,6 @@ export default function HomePage() {
     .map((slug) => getProduct(slug))
     .filter((product): product is NonNullable<typeof product> => Boolean(product));
   const heroSock = getProduct("circuit-crew") ?? products[0];
-  const orbit = getProduct("orbit-stripe") ?? products[1];
-  const pulse = getProduct("pulse-ankle") ?? products[2];
 
   return (
     <div>
@@ -43,16 +41,15 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="relative mx-auto h-[420px] w-full max-w-md">
-          <div className="absolute top-6 left-8 float-slower w-36 opacity-70">
-            <SockVisual product={orbit} />
-          </div>
-          <div className="absolute top-20 right-0 float-slow w-32 opacity-80">
-            <SockVisual product={pulse} />
-          </div>
-          <div className="absolute inset-x-12 top-10">
-            <div className="absolute inset-8 rounded-full bg-cyan/12 blur-3xl" />
-            <SockVisual product={heroSock} className="relative drop-shadow-[0_0_40px_rgba(34,240,255,0.18)]" />
+        <div className="relative mx-auto w-full max-w-md">
+          <div className="absolute inset-10 rounded-full bg-cyan/12 blur-3xl" />
+          <div className="relative aspect-[3/4] w-full">
+            <SockPhoto
+              product={heroSock}
+              priority
+              className="drop-shadow-[0_0_40px_rgba(34,240,255,0.16)]"
+              sizes="(max-width: 768px) 80vw, 420px"
+            />
           </div>
         </div>
       </section>

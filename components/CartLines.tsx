@@ -4,7 +4,7 @@ import Link from "next/link";
 import { getProductById } from "@/lib/products";
 import { formatPrice } from "@/lib/format";
 import { useCartStore } from "@/lib/store";
-import { SockVisual } from "@/components/SockVisual";
+import { SockPhoto } from "@/components/SockPhoto";
 import { SIZE_GUIDE } from "@/lib/types";
 
 export function CartLines() {
@@ -61,8 +61,8 @@ export function CartLines() {
               className="glass flex flex-col gap-4 rounded-2xl p-4 sm:flex-row sm:items-center"
             >
               <Link href={`/product/${product.slug}`} className="flex items-center gap-4">
-                <div className="h-24 w-20 shrink-0">
-                  <SockVisual product={product} className="h-full w-full" />
+                <div className="h-24 w-20 shrink-0 overflow-hidden rounded-lg bg-black/30">
+                  <SockPhoto product={product} sizes="80px" />
                 </div>
                 <div>
                   <p className="font-display text-lg">{product.name}</p>

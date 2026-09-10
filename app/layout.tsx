@@ -22,22 +22,36 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteTitle = "Nabil Socks";
+const siteDescription = "Agentic shopping, elevated.";
+const ogImage = {
+  url: "/og.png",
+  width: 1280,
+  height: 720,
+  alt: "Nabil Socks — Agentic shopping, elevated.",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://nabilsocks.com"),
   title: {
-    default: "Nabil Socks — Agentic sock store",
+    default: siteTitle,
     template: "%s · Nabil Socks",
   },
-  description:
-    "A next-generation agentic sock store for nabilsocks.com. Talk to Nabil, configure a pair, and run a demo checkout — no real payments.",
+  description: siteDescription,
   keywords: ["Nabil Socks", "agentic shopping", "socks", "nabilsocks.com"],
   openGraph: {
-    title: "Nabil Socks — The store that shops with you",
-    description:
-      "Futuristic demo storefront. An AI shopping agent helps you find socks, configure pairs, and check out.",
+    title: siteTitle,
+    description: siteDescription,
     url: "https://nabilsocks.com",
-    siteName: "Nabil Socks",
+    siteName: siteTitle,
     type: "website",
+    images: [ogImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteTitle,
+    description: siteDescription,
+    images: [ogImage.url],
   },
   icons: {
     icon: "/icon.svg",
@@ -59,11 +73,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </a>
         <Atmosphere />
         <CartHydration />
-        <Header />
-        <main id="content" className="flex-1">
-          {children}
-        </main>
-        <Footer />
+        <div className="relative z-10 flex min-h-full flex-1 flex-col">
+          <Header />
+          <main id="content" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
