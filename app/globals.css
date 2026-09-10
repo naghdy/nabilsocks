@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+:root {
+  --void: #050508;
+  --ink: #0a0a12;
+  --panel: rgba(255, 255, 255, 0.035);
+  --panel-strong: rgba(255, 255, 255, 0.065);
+  --stroke: rgba(255, 255, 255, 0.1);
+  --cyan: #22f0ff;
+  --magenta: #ff2bd6;
+  --violet: #8b5cff;
+  --text: #eef0f7;
+  --muted: #8b8ba3;
+  --glow-cyan: 0 0 40px rgba(34, 240, 255, 0.22);
+  --glow-magenta: 0 0 40px rgba(255, 43, 214, 0.18);
+}
+
+@theme inline {
+  --color-void: var(--void);
+  --color-ink: var(--ink);
+  --color-cyan: var(--cyan);
+  --color-magenta: var(--magenta);
+  --color-violet: var(--violet);
+  --color-muted: var(--muted);
+  --color-foreground: var(--text);
+  --font-sans: var(--font-outfit);
+  --font-display: var(--font-syne);
+  --font-mono: var(--font-geist-mono);
+}
+
+html,
+body {
+  background: var(--void);
+  color: var(--text);
+}
+
+body {
+  font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  min-height: 100%;
+}
+
+::selection {
+  background: rgba(34, 240, 255, 0.28);
+  color: #041016;
+}
+
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+.font-display {
+  font-family: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
+}
+
+.glass {
+  background: var(--panel);
+  border: 1px solid var(--stroke);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.glass-strong {
+  background: var(--panel-strong);
+  border: 1px solid var(--stroke);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+.neon-text {
+  background: linear-gradient(120deg, #f5fbff 10%, #22f0ff 48%, #ff2bd6 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.grid-atmosphere {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(34, 240, 255, 0.16), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 90% 10%, rgba(255, 43, 214, 0.1), transparent 50%),
+    radial-gradient(ellipse 40% 40% at 10% 20%, rgba(139, 92, 255, 0.12), transparent 50%),
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size:
+    auto,
+    auto,
+    auto,
+    72px 72px,
+    72px 72px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 20%, black, transparent 78%);
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -18px, 0);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    opacity: 0.45;
+    transform: scale(0.92);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(1.18);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.18);
+  }
+}
+
+.float-slow {
+  animation: drift 5.5s ease-in-out infinite alternate;
+}
+
+.float-slower {
+  animation: drift 7.5s ease-in-out infinite alternate-reverse;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-slow,
+  .float-slower {
+    animation: none;
+  }
+}
