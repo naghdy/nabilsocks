@@ -13,7 +13,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05, duration: 0.45 }}
-      className="group glass relative overflow-hidden rounded-2xl"
+      className="group glass relative overflow-hidden rounded-2xl transition hover:border-cyan/35 hover:shadow-[0_0_40px_rgba(34,240,255,0.08)]"
     >
       <Link href={`/product/${product.slug}`} className="block p-4 sm:p-5">
         <div className="relative mb-3 flex items-center justify-between font-mono text-[10px] tracking-[0.2em] text-muted uppercase">
