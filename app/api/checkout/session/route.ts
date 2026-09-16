@@ -67,7 +67,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         error:
-          "Live Stripe charges are blocked until Printify credentials and product/variant IDs are filled. Use a test key or complete lib/printify-map.json.",
+          "Live Stripe charges are blocked until Printify is configured. Set PRINTIFY_API_TOKEN (PRINTIFY_SHOP_ID defaults to 28967994).",
       },
       { status: 503 },
     );

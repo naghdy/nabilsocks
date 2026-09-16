@@ -96,18 +96,16 @@ export function CheckoutForm({
           </p>
         ) : liveBlocked ? (
           <p className="rounded-2xl border border-magenta/30 bg-magenta/8 px-4 py-3 text-sm" role="alert">
-            Live Stripe keys are set, but Printify fulfillment is not ready. Set{" "}
-            <code className="font-mono text-cyan">PRINTIFY_API_TOKEN</code> and fill S/M/L{" "}
-            <code className="font-mono text-cyan">variant_id</code>s in{" "}
-            <code className="font-mono text-cyan">lib/printify-map.json</code> (see README)
-            before taking live payments.
+            Live Stripe keys are set, but Printify is not configured. Set{" "}
+            <code className="font-mono text-cyan">PRINTIFY_API_TOKEN</code> before taking live
+            payments.
           </p>
         ) : (
           <p className="rounded-2xl border border-cyan/25 bg-cyan/8 px-4 py-3 text-sm">
             Pay with Stripe ({config.currency}). Shipping address is collected on the Stripe
             page and sent to Printify after payment. Card details never touch this site.
             {!config.printifyReady
-              ? " Printify mapping is incomplete — test payments will succeed, but fulfillment stays on hold until product IDs are filled."
+              ? " Printify token is not set — test payments will succeed, but fulfillment waits on PRINTIFY_API_TOKEN."
               : " Paid orders create a Printify job for Sublimation Crew Socks (EU)."}
           </p>
         )}

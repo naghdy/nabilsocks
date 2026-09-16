@@ -2,10 +2,17 @@
  * Site `product.slug` + size → Printify shop `product_id` + `variant_id`.
  *
  * Shop (non-secret): 28967994
- * Catalog blueprint 496 (Sublimation Crew Socks EU / Textildruck Europa) is NOT
- * a shop product id. Each draft in Printify → My products has its own hex id.
+ * Catalog blueprint 496 (Sublimation Crew Socks EU / Textildruck Europa).
  *
- * Product ids (wired from Printify My products):
+ * `variant_id` is the blueprint size id and is THE SAME on all 10 products:
+ *   S 66447 · M 66448 · L 66449
+ * `product_id` is what distinguishes the design. Create Order must send both.
+ *
+ * Do NOT use Printify dashboard SKU strings as variant_id (e.g. Orbit Stripe
+ * UI SKUs 13157926986216562450 / 31981798884390687008 / 50380363104639054382).
+ * Those are SKUs, not API variant ids, and they exceed Number.MAX_SAFE_INTEGER.
+ *
+ * Product ids:
  *   Circuit Crew      6aaae248d5714b7cbd0daaf6
  *   Pulse Crew        6aaae716d178a7928f075f2f
  *   Solar Flare       6aaae80171c86c01df0e6ea5
@@ -17,31 +24,13 @@
  *   Quiet Protocol    6aaaecfc0801ed5d40076aa6
  *   Orbit Stripe      6aaaedb943a8179bdc0a7a88
  *
- * TODO — variant ids (S/M/L) are still 0. Fill from the Printify API once
- * PRINTIFY_API_TOKEN is in the environment (local or Vercel):
- *
- *   GET /v1/shops/28967994/products/{product_id}.json
- *
- * Use `variants[].id` where the title is S, M, or L. Those ids are small
- * integers (safe JS numbers). Then either:
- *   - paste them into `lib/printify-map.json`, or
- *   - run `npm run printify:dump-map -- --write`
- *
- * Do NOT use Printify dashboard SKU strings as variant_id. Orbit Stripe UI
- * SKUs (unverified, likely not API variant ids):
- *   S 13157926986216562450
- *   M 31981798884390687008
- *   L 50380363104639054382
- * Those values exceed Number.MAX_SAFE_INTEGER and must be confirmed against
- * the GET response before use.
+ * Confirm or refresh via GET /v1/shops/28967994/products/{product_id}.json
+ * (`npm run printify:dump-map -- --write` with PRINTIFY_API_TOKEN).
  */
 
 import type { Product } from "./types";
 import type { SockSize } from "./types";
 import fileMap from "./printify-map.json";
-
-/** Printify shop that holds the ten Sublimation Crew Socks (EU) drafts. */
-export const PRINTIFY_SHOP_ID_DEFAULT = "28967994";
 
 export type PrintifySizeVariants = Record<SockSize, number>;
 
@@ -51,6 +40,19 @@ export type PrintifyShopEntry = {
 };
 
 export type PrintifyShopMap = Record<string, PrintifyShopEntry>;
+
+/** Printify shop that holds the ten Sublimation Crew Socks (EU) drafts. */
+export const PRINTIFY_SHOP_ID_DEFAULT = "28967994";
+
+/**
+ * Blueprint 496 size variant ids — shared by every shop product in this catalog.
+ * Confirmed via GET /v1/shops/28967994/products/{id}.json
+ */
+export const PRINTIFY_BLUEPRINT_SIZE_VARIANTS: PrintifySizeVariants = {
+  S: 66447,
+  M: 66448,
+  L: 66449,
+};
 
 const FILE_MAP = fileMap as PrintifyShopMap;
 
@@ -78,9 +80,9 @@ function mergeMaps(base: PrintifyShopMap, overlay: Partial<PrintifyShopMap>): Pr
     merged[slug] = {
       printifyProductId: entry.printifyProductId || current?.printifyProductId || "",
       variants: {
-        S: entry.variants?.S || current?.variants.S || 0,
-        M: entry.variants?.M || current?.variants.M || 0,
-        L: entry.variants?.L || current?.variants.L || 0,
+        S: entry.variants?.S || current?.variants.S || PRINTIFY_BLUEPRINT_SIZE_VARIANTS.S,
+        M: entry.variants?.M || current?.variants.M || PRINTIFY_BLUEPRINT_SIZE_VARIANTS.M,
+        L: entry.variants?.L || current?.variants.L || PRINTIFY_BLUEPRINT_SIZE_VARIANTS.L,
       },
     };
   }
@@ -88,7 +90,19 @@ function mergeMaps(base: PrintifyShopMap, overlay: Partial<PrintifyShopMap>): Pr
 }
 
 export function getPrintifyShopMap(): PrintifyShopMap {
-  return mergeMaps(FILE_MAP, parseEnvOverlay());
+  const merged = mergeMaps(FILE_MAP, parseEnvOverlay());
+  const withSizes: PrintifyShopMap = {};
+  for (const [slug, entry] of Object.entries(merged)) {
+    withSizes[slug] = {
+      printifyProductId: entry.printifyProductId,
+      variants: {
+        S: entry.variants.S || PRINTIFY_BLUEPRINT_SIZE_VARIANTS.S,
+        M: entry.variants.M || PRINTIFY_BLUEPRINT_SIZE_VARIANTS.M,
+        L: entry.variants.L || PRINTIFY_BLUEPRINT_SIZE_VARIANTS.L,
+      },
+    };
+  }
+  return withSizes;
 }
 
 export function getPrintifyShopEntry(slug: string): PrintifyShopEntry | undefined {

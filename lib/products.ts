@@ -9,7 +9,7 @@ import {
 
 const printify = PRINTIFY_SOCKS;
 
-/** Shop product/variant IDs are attached from `lib/printify-map.ts` (not blueprint 496). */
+/** Shop product + blueprint size variant IDs are attached from `lib/printify-map.ts`. */
 const catalog: Product[] = [
   {
     id: "circuit-crew",

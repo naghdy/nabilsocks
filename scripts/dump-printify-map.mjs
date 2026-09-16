@@ -8,6 +8,8 @@
  *
  * Hits GET /v1/shops/{shop_id}/products/{product_id}.json for each known
  * shop product id in lib/printify-map.json (shop 28967994 by default).
+ * Expected blueprint size variant ids: S 66447, M 66448, L 66449.
+ * Skips dashboard SKU strings (they are not Create Order variant_id).
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";

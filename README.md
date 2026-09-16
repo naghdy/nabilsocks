@@ -92,9 +92,17 @@ Shop **28967994**. Site slugs live in `lib/products.ts`. Shop product ids and si
 
 Blueprint `496` is the catalog blank. It is **not** the shop product id.
 
-### Shop product ids (filled)
+### Shop product + size variant ids (filled)
 
-| Site slug | Printify product |
+`variant_id` is the **blueprint size id** and is the same on every product. `product_id` is the design.
+
+| Size | `variant_id` |
+| --- | --- |
+| S | `66447` |
+| M | `66448` |
+| L | `66449` |
+
+| Site slug | Printify `product_id` |
 | --- | --- |
 | `circuit-crew` | `6aaae248d5714b7cbd0daaf6` |
 | `pulse-crew` | `6aaae716d178a7928f075f2f` |
@@ -107,27 +115,13 @@ Blueprint `496` is the catalog blank. It is **not** the shop product id.
 | `quiet-protocol` | `6aaaecfc0801ed5d40076aa6` |
 | `orbit-stripe` | `6aaaedb943a8179bdc0a7a88` |
 
-### TODO: S/M/L variant ids
+Create Order line items must send **both** `product_id` (design) and `variant_id` (size). Do **not** use Printify dashboard SKU strings as `variant_id` (for example Orbit Stripe UI SKUs `13157926986216562450` / `31981798884390687008` / `50380363104639054382`). Those are SKUs, not API variant ids.
 
-`variants` in `lib/printify-map.json` are still `0`. Fulfillment will not create a Printify order until these are real API `variant_id` integers.
-
-Once `PRINTIFY_API_TOKEN` is in Vercel (or `.env.local`):
+To re-fetch from the API:
 
 ```bash
-# GET /v1/shops/28967994/products/{product_id}.json for each row above
-PRINTIFY_API_TOKEN=… npm run printify:dump-map
 PRINTIFY_API_TOKEN=… npm run printify:dump-map -- --write
 ```
-
-Use `variants[].id` where the title is **S**, **M**, or **L**. Those ids are small integers.
-
-Do **not** paste Printify dashboard SKU strings. Orbit Stripe UI SKUs (unverified — confirm against the GET response before using):
-
-- S `13157926986216562450`
-- M `31981798884390687008`
-- L `50380363104639054382`
-
-Those values are larger than `Number.MAX_SAFE_INTEGER` and are almost certainly SKUs, not Printify API `variant_id`s.
 
 If order create fails on unpublished drafts, publish the product (or enable the S/M/L variants) in that Printify shop and retry the Stripe webhook.
 
