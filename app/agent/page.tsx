@@ -20,8 +20,8 @@ export default function AgentPage() {
         <h1 className="font-display mt-2 text-5xl tracking-tight">Talk to Nabil</h1>
         <p className="mt-3 max-w-xl text-muted">
           Scripted, catalog-aware, and a little cinematic. Ask for a night out,
-          quiet merino, a glitch, or say add Circuit Crew. Nothing leaves the
-          browser.
+          a quiet cream crew, a glitch, or say add Circuit Crew. Nothing leaves
+          the browser. The grid is Printful Black Foot — crew, M–XL.
         </p>
         <div className="mt-8">
           <AgentChat />

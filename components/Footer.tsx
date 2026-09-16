@@ -8,8 +8,8 @@ export function Footer() {
         <div className="space-y-3">
           <Logo />
           <p className="max-w-xs text-sm text-muted">
-            Agentic retail for nabilsocks.com. The store listens first, then knits a
-            recommendation.
+            Agentic retail for nabilsocks.com. The store listens first, then
+            recommends a crew from the Printful black-foot grid.
           </p>
         </div>
         <div>
@@ -41,17 +41,19 @@ export function Footer() {
         </div>
         <div>
           <p className="font-mono text-[10px] tracking-[0.28em] text-magenta uppercase">
-            Demo
+            Fulfillment
           </p>
           <p className="mt-3 text-sm text-muted">
-            This is a production-feeling demo. No real payments, no live inventory,
-            no personal data is sent to a backend. Checkout will never charge a card.
+            Specs match Printful Black Foot Sublimated Socks (print-on-demand).
+            Checkout is still a demo — no real payments, no live Printful orders,
+            no personal data is sent to a backend.
           </p>
         </div>
       </div>
       <div className="border-t border-white/6">
         <p className="mx-auto max-w-6xl px-4 py-4 font-mono text-[10px] tracking-[0.18em] text-muted uppercase sm:px-6">
-          © {new Date().getFullYear()} Nabil Socks · nabilsocks.com · Demo storefront
+          © {new Date().getFullYear()} Nabil Socks · nabilsocks.com · Printful
+          POD · Demo checkout
         </p>
       </div>
     </footer>

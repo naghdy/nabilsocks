@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import {
+  BLANK_ORIGIN_COPY,
+  CARE_COPY,
+  FULFILLMENT_COPY,
+  MATERIAL_COMPOSITION,
+  PRINTFUL_CATALOG_URL,
+} from "@/lib/types";
 
 export const metadata: Metadata = {
   title: "About",
@@ -22,15 +29,28 @@ export default function AboutPage() {
           whether tonight is a boardroom or a burn.
         </p>
         <p>
-          We knit like a house that takes materials seriously — merino that
-          regulates, bamboo that drifts color, recycled poly that wears its
-          glitch on purpose. Then we put an agent on the floor. Nabil does not
-          replace taste. It compresses the search until taste can speak.
+          The designs are ours — circuit, pulse, flare, void. The physical sock
+          is honest: every pair is Printful{" "}
+          <a
+            href={PRINTFUL_CATALOG_URL}
+            className="text-cyan hover:underline"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Black Foot Sublimated Socks
+          </a>
+          . Crew length. {MATERIAL_COMPOSITION}. Sublimation graphics on the
+          ribbed leg; cushioned black foot underneath. Sizes M, L, and XL.
+        </p>
+        <p>
+          Then we put an agent on the floor. Nabil does not replace taste. It
+          compresses the search until taste can speak.
         </p>
         <p>
           This site is the public demo for <strong className="text-white">nabilsocks.com</strong>.
-          The catalog is invented. The checkout is theater. The feeling is the
-          product: shopping as a conversation, staged in neon and glass.
+          Product specs match the Printful blank. Checkout is still theater until
+          live orders are wired. The feeling is the product: shopping as a
+          conversation, staged in neon and glass.
         </p>
       </div>
       <div className="glass mt-10 rounded-3xl p-6">
@@ -38,9 +58,9 @@ export default function AboutPage() {
           Protocol
         </p>
         <p className="mt-3 text-sm text-muted">
-          No Stripe keys. No backend. Cart lives in your browser. When the domain
-          points at Vercel, this is what the future of a sock store looks like
-          from the street.
+          No Stripe keys. No Printful API yet. Cart lives in your browser. When
+          the domain points at Vercel, this is what the future of a sock store
+          looks like from the street.
         </p>
         <Link
           href="/agent"
@@ -48,6 +68,12 @@ export default function AboutPage() {
         >
           Meet the agent
         </Link>
+      </div>
+      <div className="mt-8 space-y-3 text-sm text-muted">
+        <h2 className="font-display text-2xl text-white">Fine print</h2>
+        <p>{FULFILLMENT_COPY}</p>
+        <p>{CARE_COPY}</p>
+        <p>{BLANK_ORIGIN_COPY}</p>
       </div>
     </div>
   );

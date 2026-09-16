@@ -15,7 +15,9 @@ export default function CheckoutPage() {
       <h1 className="font-display mt-2 text-5xl tracking-tight">Checkout</h1>
       <p className="mt-3 max-w-xl text-muted">
         Shipping and payment fields exist so the ritual feels complete. Submit
-        and you get a souvenir order id — never a charge.
+        and you get a souvenir order id — never a charge. Pairs are specified as
+        Printful Black Foot Sublimated Socks; this demo does not place a live
+        Printful order.
       </p>
       <div className="mt-8">
         <CheckoutForm />

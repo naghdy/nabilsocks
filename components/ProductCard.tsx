@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { SockPhoto } from "@/components/SockPhoto";
-import { formatMaterial, formatHeight } from "@/lib/products";
+import { formatMaterialShort, formatHeight } from "@/lib/products";
 import { formatPrice } from "@/lib/format";
 import type { Product } from "@/lib/types";
 
@@ -23,7 +23,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
               Limited
             </span>
           ) : (
-            <span>{formatMaterial(product.material)}</span>
+            <span>{formatMaterialShort(product.material)}</span>
           )}
         </div>
         <div className="relative mx-auto aspect-[3/4] w-full max-w-[200px]">

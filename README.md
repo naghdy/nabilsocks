@@ -4,6 +4,17 @@ A next-generation **agentic** sock storefront for [nabilsocks.com](https://nabil
 
 This is a production-feeling demo: dark glass, neon, client-side cart, and a scripted shopping agent that recommends from the live catalog.
 
+## Fulfillment partner: Printful
+
+Every listing is specified against **[Black Foot Sublimated Socks](https://www.printful.com/custom/socks/personalized/black-foot-sublimated-socks)** (Printful catalog product `186`):
+
+- Crew length, cushioned black foot, ribbed leg, sublimation print on the upper
+- **60% nylon / 22% cotton / 18% spandex**
+- Sizes **M, L, XL** only
+- Print-on-demand / made to order (typical fulfill ~2–5 business days, then shipping)
+
+The storefront is **not** wired to the Printful API yet. Checkout remains a demo: no live orders are placed.
+
 ## Stack
 
 - Next.js (App Router) + TypeScript
@@ -31,12 +42,12 @@ No environment variables are required.
 ## Demo flows
 
 1. **Landing** — brand, agent teaser, featured pairs
-2. **Shop** — 10 products with CSS/SVG art (no remote images)
-3. **Product** — size, quantity, add to bag
-4. **Agent** (`/agent`) — ask for occasion / color / height / material / vibe; say `add Circuit Crew` to bag a pair
+2. **Shop** — 10 crew designs with CSS/SVG art (no remote images)
+3. **Product** — size (M / L / XL), quantity, add to bag, Printful size guide + care
+4. **Agent** (`/agent`) — ask for occasion / color / vibe; say `add Circuit Crew` to bag a pair
 5. **Cart** — update qty, remove
 6. **Checkout** — shipping + payment theater; success screen with a fake order id
-7. **About** — brand story
+7. **About** — brand story + honest Printful specs
 
 Checkout never charges a card. Fields are not sent to a processor.
 

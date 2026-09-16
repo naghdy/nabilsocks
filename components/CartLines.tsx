@@ -5,7 +5,7 @@ import { getProductById } from "@/lib/products";
 import { formatPrice } from "@/lib/format";
 import { useCartStore } from "@/lib/store";
 import { SockPhoto } from "@/components/SockPhoto";
-import { SIZE_GUIDE } from "@/lib/types";
+import { SIZE_GUIDE, isSockSize } from "@/lib/types";
 
 export function CartLines() {
   const items = useCartStore((s) => s.items);
@@ -67,7 +67,8 @@ export function CartLines() {
                 <div>
                   <p className="font-display text-lg">{product.name}</p>
                   <p className="text-sm text-muted">
-                    Size {item.size} · {SIZE_GUIDE[item.size]}
+                    Size {item.size}
+                    {isSockSize(item.size) ? ` · ${SIZE_GUIDE[item.size]}` : " · unavailable size"}
                   </p>
                   <p className="font-mono text-sm text-cyan">{formatPrice(product.price)}</p>
                 </div>
@@ -108,7 +109,10 @@ export function CartLines() {
         <div>
           <p className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">Subtotal</p>
           <p className="font-display text-3xl">{formatPrice(subtotal)}</p>
-          <p className="text-xs text-muted">Demo shipping is listed as complimentary.</p>
+          <p className="text-xs text-muted">
+            Demo shipping is listed as complimentary. Live Printful fulfill is
+            typically 2–5 business days, then shipping.
+          </p>
         </div>
         <Link
           href="/checkout"

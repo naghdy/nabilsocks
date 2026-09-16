@@ -34,6 +34,7 @@ function scoreProduct(product: Product, query: string) {
     product.description,
     product.height,
     product.material,
+    ...(product.aliases ?? []),
     ...product.colors,
     ...product.vibe,
     ...product.occasion,
@@ -70,39 +71,24 @@ function scoreProduct(product: Product, query: string) {
     if (product.occasion.includes("gift")) score += 4;
     if (product.limited) score += 3;
   }
-  if (includesAny(query, ["ankle"])) {
-    if (product.height === "ankle") score += 8;
-  }
   if (includesAny(query, ["crew"])) {
-    if (product.height === "crew") score += 8;
+    if (product.height === "crew") score += 4;
+  }
+  if (includesAny(query, ["ankle"])) {
+    if (product.slug === "pulse-crew") score += 8;
   }
   if (includesAny(query, ["knee", "tall"])) {
-    if (product.height === "knee") score += 10;
+    if (product.slug === "void-walker") score += 6;
   }
   if (includesAny(query, ["no-show", "noshow", "invisible", "hidden"])) {
-    if (product.height === "no-show") score += 10;
+    if (product.slug === "glacier-crew") score += 6;
   }
-  if (includesAny(query, ["mid", "calf"])) {
-    if (product.height === "mid-calf") score += 8;
+  if (includesAny(query, ["luxury", "quiet luxury"])) {
+    if (product.vibe.includes("luxury") || product.vibe.includes("quiet"))
+      score += 6;
   }
-  if (includesAny(query, ["merino", "wool"])) {
-    if (product.material === "merino") score += 7;
-  }
-  if (includesAny(query, ["cashmere", "silk", "luxury"])) {
-    if (product.material === "cashmere-silk" || product.vibe.includes("luxury"))
-      score += 7;
-  }
-  if (includesAny(query, ["bamboo"])) {
-    if (product.material === "bamboo") score += 8;
-  }
-  if (includesAny(query, ["cotton"])) {
-    if (product.material === "organic-cotton") score += 8;
-  }
-  if (includesAny(query, ["mesh", "technical"])) {
-    if (product.material === "technical-mesh") score += 7;
-  }
-  if (includesAny(query, ["recycled", "sustainable"])) {
-    if (product.material === "recycled-poly") score += 8;
+  if (includesAny(query, ["cotton", "nylon", "spandex", "blend"])) {
+    if (product.material === "nylon-blend") score += 3;
   }
   if (includesAny(query, ["cyan", "blue", "electric", "ice", "glacier"])) {
     if (product.colors.some((c) => ["cyan", "blue", "ice", "electric"].includes(c)))
@@ -155,9 +141,11 @@ function findProductMention(query: string) {
   const lower = query.toLowerCase();
   return products.find((product) => {
     const tokens = product.name.toLowerCase().split(" ");
+    const aliases = product.aliases ?? [];
     return (
-      lower.includes(product.slug.replace("-", " ")) ||
+      lower.includes(product.slug.replace(/-/g, " ")) ||
       lower.includes(product.name.toLowerCase()) ||
+      aliases.some((alias) => lower.includes(alias)) ||
       tokens.every((token) => lower.includes(token))
     );
   });
@@ -166,21 +154,27 @@ function findProductMention(query: string) {
 function detectSize(query: string): SockSize {
   if (/\bxl\b/.test(query) || query.includes("extra large")) return "XL";
   if (/\bl\b/.test(query) || query.includes("large")) return "L";
-  if (/\bs\b/.test(query) || query.includes("small")) return "S";
   return "M";
 }
+
+function askedForSmall(query: string) {
+  return /\bsize s\b/.test(query) || /\bsmall\b/.test(query);
+}
+
+const specDisclaimer =
+  "Every pair is Printful Black Foot Sublimated Socks: crew length, 60% nylon / 22% cotton / 18% spandex, sublimation on the ribbed leg, cushioned black foot. Sizes M, L, XL only.";
 
 export const starterChips = [
   "Night out",
   "Boardroom",
   "I run",
-  "Quiet luxury",
+  "Quiet crew",
   "Limited drops",
   "Surprise me",
 ];
 
 export function openingMessage() {
-  return "I'm Nabil. I don't browse catalogs — I listen. Occasion, color, height, material, vibe. Give me any of those and I'll pull a pair from the grid. Or say add Circuit Crew if you already know.";
+  return "I'm Nabil. I don't browse catalogs — I listen. Occasion, color, vibe. The whole grid is crew-length Printful sublimation — I'll pull a pair that matches how you move. Or say add Circuit Crew if you already know.";
 }
 
 export function replyTo(raw: string): AgentReply {
@@ -189,7 +183,7 @@ export function replyTo(raw: string): AgentReply {
 
   if (!text) {
     return {
-      text: "Silence is a vibe, but I need a signal. Try night out, merino, or surprise me.",
+      text: "Silence is a vibe, but I need a signal. Try night out, cyan, or surprise me.",
       products: [],
       action: { type: "none" },
     };
@@ -197,7 +191,7 @@ export function replyTo(raw: string): AgentReply {
 
   if (includesAny(query, ["checkout", "pay", "buy now"])) {
     return {
-      text: "Cart is ready when you are. This checkout is a demo — no real charge, no real card captured. I'll walk you to the gate.",
+      text: "Cart is ready when you are. This checkout is a demo — no real charge, no real card captured, and Printful is not wired yet. I'll walk you to the gate.",
       products: [],
       action: { type: "navigate", href: "/checkout" },
     };
@@ -223,8 +217,11 @@ export function replyTo(raw: string): AgentReply {
 
   if (addIntent && mentioned) {
     const size = detectSize(query);
+    const smallNote = askedForSmall(query)
+      ? " This SKU has no S — Printful Black Foot starts at M. Bagged M unless you named L or XL."
+      : "";
     return {
-      text: `Placed ${mentioned.name} in ${size} into the bag. Demo inventory, real taste. Want a second pair or shall I walk you to checkout?`,
+      text: `Placed ${mentioned.name} in ${size} into the bag.${smallNote} Demo inventory, real taste. Want a second pair or shall I walk you to checkout?`,
       products: [mentioned],
       action: { type: "add", product: mentioned, size },
     };
@@ -242,7 +239,7 @@ export function replyTo(raw: string): AgentReply {
 
   if (greetings.some((g) => query === g || query.startsWith(`${g} `))) {
     return {
-      text: "Signal received. Tell me how you move — run, boardroom, night, lounge — or name a color and I'll do the rest.",
+      text: "Signal received. Tell me how you move — run, boardroom, night, lounge — or name a color and I'll do the rest. Whole catalog is crew, Printful black-foot blanks.",
       products: products.filter((p) => p.limited),
       action: { type: "none" },
     };
@@ -259,11 +256,30 @@ export function replyTo(raw: string): AgentReply {
 
   if (includesAny(query, ["help", "what can", "how do"])) {
     return {
-      text: "I match pairs from the Nabil catalog. Talk like a human: I need quiet merino for a meeting or something glitchy and loud. I can add to cart, open checkout, or keep refining.",
+      text: `I match pairs from the Nabil catalog. Talk like a human: night out, quiet cream, something glitchy and loud. ${specDisclaimer} I can add to cart, open checkout, or keep refining.`,
       products: products.slice(0, 3),
       action: { type: "none" },
     };
   }
+
+  const fakeFiber = includesAny(query, [
+    "merino",
+    "wool",
+    "cashmere",
+    "silk",
+    "bamboo",
+    "organic",
+  ]);
+  const fakeHeight = includesAny(query, [
+    "knee",
+    "no-show",
+    "noshow",
+    "invisible",
+    "ankle",
+    "mid-calf",
+    "midcalf",
+    "no show",
+  ]);
 
   const picks = recommend(query, 3);
   const top = picks[0];
@@ -272,14 +288,20 @@ export function replyTo(raw: string): AgentReply {
   if (includesAny(query, ["work", "board", "quiet"])) reasons.push("reads as composure");
   if (includesAny(query, ["night", "date", "party"])) reasons.push("holds a room");
   if (includesAny(query, ["limited"])) reasons.push("won't restock");
-  if (includesAny(query, ["merino"])) reasons.push("temperature-honest wool");
 
-  const flavor = reasons.length
+  let flavor = reasons.length
     ? `I weighted for ${reasons.join(" / ")}.`
     : "I scored the catalog against what you said.";
 
+  if (fakeFiber) {
+    flavor = `We don't run merino, cashmere, silk, or bamboo — ${specDisclaimer} Matching color and vibe instead.`;
+  } else if (fakeHeight) {
+    flavor =
+      "The whole grid is crew on this SKU. Pulse Crew wears an ankle-band graphic; Glacier Crew is the ice print; Void Walker is the starfield crew — not a knee-high. Matching vibe instead.";
+  }
+
   return {
-    text: `${flavor} Lead pick is ${top.name} — ${top.tagline} Say add ${top.name} to bag it in M, or name a size.`,
+    text: `${flavor} Lead pick is ${top.name} — ${top.tagline} Say add ${top.name} to bag it in M, or name L or XL.`,
     products: picks,
     action: { type: "none" },
   };
