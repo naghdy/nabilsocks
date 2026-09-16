@@ -1,3 +1,4 @@
+import { attachPrintifyShopMapping } from "./printify-map";
 import {
   MATERIAL_LABEL,
   PRINTIFY_SOCKS,
@@ -8,7 +9,8 @@ import {
 
 const printify = PRINTIFY_SOCKS;
 
-export const products: Product[] = [
+/** Shop product + blueprint size variant IDs are attached from `lib/printify-map.ts`. */
+const catalog: Product[] = [
   {
     id: "circuit-crew",
     slug: "circuit-crew",
@@ -224,6 +226,8 @@ export const products: Product[] = [
     },
   },
 ];
+
+export const products: Product[] = catalog.map(attachPrintifyShopMapping);
 
 export function getProduct(slug: string) {
   return products.find((product) => product.slug === slug);

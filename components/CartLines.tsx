@@ -110,15 +110,15 @@ export function CartLines() {
           <p className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">Subtotal</p>
           <p className="font-display text-3xl">{formatPrice(subtotal)}</p>
           <p className="text-xs text-muted">
-            Demo shipping is listed as complimentary. Live Printify EU production
-            is typically 2–7 business days, then shipping.
+            Printify EU production is typically 2–7 business days, then shipping.
+            Checkout is Stripe; fulfillment is Printify.
           </p>
         </div>
         <Link
           href="/checkout"
           className="rounded-full bg-cyan px-6 py-3 font-mono text-[11px] tracking-[0.18em] text-black uppercase"
         >
-          Demo checkout
+          Checkout
         </Link>
       </div>
     </div>

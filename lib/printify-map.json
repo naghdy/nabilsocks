@@ -1,0 +1,42 @@
+{
+  "circuit-crew": {
+    "printifyProductId": "6aaae248d5714b7cbd0daaf6",
+    "variants": { "S": 66447, "M": 66448, "L": 66449 }
+  },
+  "pulse-crew": {
+    "printifyProductId": "6aaae716d178a7928f075f2f",
+    "variants": { "S": 66447, "M": 66448, "L": 66449 }
+  },
+  "solar-flare": {
+    "printifyProductId": "6aaae80171c86c01df0e6ea5",
+    "variants": { "S": 66447, "M": 66448, "L": 66449 }
+  },
+  "void-walker": {
+    "printifyProductId": "6aaae9ab5ca74edf1b082bce",
+    "variants": { "S": 66447, "M": 66448, "L": 66449 }
+  },
+  "glacier-crew": {
+    "printifyProductId": "6aaaea625ca74edf1b082c1b",
+    "variants": { "S": 66447, "M": 66448, "L": 66449 }
+  },
+  "chromatic-drift": {
+    "printifyProductId": "6aaaeaee612292acda003ea4",
+    "variants": { "S": 66447, "M": 66448, "L": 66449 }
+  },
+  "signal-noise": {
+    "printifyProductId": "6aaaeb964ba9c49749037e4d",
+    "variants": { "S": 66447, "M": 66448, "L": 66449 }
+  },
+  "ember-thread": {
+    "printifyProductId": "6aaaec572ccc997f670732d8",
+    "variants": { "S": 66447, "M": 66448, "L": 66449 }
+  },
+  "quiet-protocol": {
+    "printifyProductId": "6aaaecfc0801ed5d40076aa6",
+    "variants": { "S": 66447, "M": 66448, "L": 66449 }
+  },
+  "orbit-stripe": {
+    "printifyProductId": "6aaaedb943a8179bdc0a7a88",
+    "variants": { "S": 66447, "M": 66448, "L": 66449 }
+  }
+}

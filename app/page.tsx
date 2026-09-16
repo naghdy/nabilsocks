@@ -23,7 +23,7 @@ export default function HomePage() {
           </h1>
           <p className="mt-6 max-w-md text-lg text-muted">
             The store that shops with you. Tell Nabil how you move. Walk out in the
-            right pair — configured, bagged, demo-checked-out.
+            right pair — configured, bagged, paid through Stripe.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
@@ -95,7 +95,7 @@ export default function HomePage() {
           {[
             ["Listen", "Nabil collects signal: night, cyan, quiet, glitch."],
             ["Match", "The catalog is scored, not filtered like a spreadsheet."],
-            ["Close", "Bag it. Demo checkout. Fake order id. Zero charge."],
+            ["Close", "Bag it. Stripe Checkout. Printify ships the pair."],
           ].map(([title, copy], i) => (
             <div key={title}>
               <p className="font-mono text-[10px] tracking-[0.24em] text-cyan uppercase">

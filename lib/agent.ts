@@ -192,7 +192,7 @@ export function replyTo(raw: string): AgentReply {
 
   if (includesAny(query, ["checkout", "pay", "buy now"])) {
     return {
-      text: "Cart is ready when you are. This checkout is a demo — no real charge, no real card captured, and Printify is not wired yet. I'll walk you to the gate.",
+      text: "Cart is ready when you are. Stripe takes payment, then Printify fulfills the crew. I'll walk you to checkout.",
       products: [],
       action: { type: "navigate", href: "/checkout" },
     };
@@ -222,7 +222,7 @@ export function replyTo(raw: string): AgentReply {
       ? " This SKU has no XL — Printify EU crew tops out at L. Bagged L unless you named S or M."
       : "";
     return {
-      text: `Placed ${mentioned.name} in ${size} into the bag.${xlNote} Demo inventory, real taste. Want a second pair or shall I walk you to checkout?`,
+      text: `Placed ${mentioned.name} in ${size} into the bag.${xlNote} Want a second pair or shall I walk you to checkout?`,
       products: [mentioned],
       action: { type: "add", product: mentioned, size },
     };

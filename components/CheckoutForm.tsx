@@ -1,16 +1,20 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { FormEvent, useMemo, useState } from "react";
+import type { CheckoutConfig } from "@/lib/checkout-types";
+import { formatPrice } from "@/lib/format";
 import { getProductById } from "@/lib/products";
-import { formatPrice, generateOrderId } from "@/lib/format";
-import { LAST_ORDER_KEY, useCartStore, type LastOrder } from "@/lib/store";
+import { useCartStore } from "@/lib/store";
 
-export function CheckoutForm() {
-  const router = useRouter();
+export function CheckoutForm({
+  config,
+  canceled,
+}: {
+  config: CheckoutConfig;
+  canceled: boolean;
+}) {
   const items = useCartStore((s) => s.items);
   const hydrated = useCartStore((s) => s.hydrated);
-  const clear = useCartStore((s) => s.clear);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
@@ -23,6 +27,9 @@ export function CheckoutForm() {
     [items],
   );
 
+  const liveBlocked = config.stripeLive && !config.printifyReady;
+  const canPay = config.stripeConfigured && !liveBlocked && items.length > 0;
+
   if (!hydrated) {
     return <p className="text-sm text-muted">Preparing checkout…</p>;
   }
@@ -31,33 +38,42 @@ export function CheckoutForm() {
     return (
       <div className="glass rounded-3xl px-6 py-16 text-center">
         <h2 className="font-display text-3xl">Nothing to transmit.</h2>
-        <p className="mt-2 text-sm text-muted">Add a pair before opening the demo gate.</p>
+        <p className="mt-2 text-sm text-muted">Add a pair before opening checkout.</p>
       </div>
     );
   }
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!canPay) return;
     const data = new FormData(event.currentTarget);
-    const required = ["email", "name", "address", "city", "card", "expiry", "cvc"];
-    const missing = required.some((key) => !String(data.get(key) ?? "").trim());
-    if (missing) {
-      setError("Fill every field. Nothing is charged — this is still a rehearsal.");
-      return;
-    }
+    const email = String(data.get("email") ?? "").trim();
     setError("");
     setSubmitting(true);
-    const order: LastOrder = {
-      id: generateOrderId(),
-      email: String(data.get("email")),
-      city: String(data.get("city")),
-      items,
-      total: subtotal,
-      placedAt: new Date().toISOString(),
-    };
-    sessionStorage.setItem(LAST_ORDER_KEY, JSON.stringify(order));
-    clear();
-    router.push(`/checkout/success?id=${order.id}`);
+    try {
+      const response = await fetch("/api/checkout/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email || undefined,
+          items: items.map((item) => ({
+            productId: item.productId,
+            size: item.size,
+            qty: item.qty,
+          })),
+        }),
+      });
+      const payload = (await response.json()) as { url?: string; error?: string };
+      if (!response.ok || !payload.url) {
+        setError(payload.error || "Could not start Stripe Checkout.");
+        setSubmitting(false);
+        return;
+      }
+      window.location.assign(payload.url);
+    } catch {
+      setError("Network error starting Stripe Checkout. Try again.");
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -67,37 +83,46 @@ export function CheckoutForm() {
       className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]"
     >
       <div className="glass space-y-5 rounded-3xl p-5 sm:p-6">
-        <p className="rounded-2xl border border-magenta/30 bg-magenta/8 px-4 py-3 text-sm">
-          Demo checkout — no charge, no live Printify order. Cards are not
-          processed, stored, or sent anywhere. Catalog specs are the real
-          Sublimation Crew Socks (EU) blank (crew, S–L, black heel and toe).
-        </p>
+        {canceled ? (
+          <p className="rounded-2xl border border-magenta/30 bg-magenta/8 px-4 py-3 text-sm" role="status">
+            Stripe Checkout was canceled. Your bag is still here.
+          </p>
+        ) : null}
+        {!config.stripeConfigured ? (
+          <p className="rounded-2xl border border-magenta/30 bg-magenta/8 px-4 py-3 text-sm" role="alert">
+            Stripe is not configured. Set <code className="font-mono text-cyan">STRIPE_SECRET_KEY</code> in
+            the environment (see <code className="font-mono text-cyan">.env.example</code>). Checkout
+            cannot start until the secret key is present.
+          </p>
+        ) : liveBlocked ? (
+          <p className="rounded-2xl border border-magenta/30 bg-magenta/8 px-4 py-3 text-sm" role="alert">
+            Live Stripe keys are set, but Printify is not configured. Set{" "}
+            <code className="font-mono text-cyan">PRINTIFY_API_TOKEN</code> before taking live
+            payments.
+          </p>
+        ) : (
+          <p className="rounded-2xl border border-cyan/25 bg-cyan/8 px-4 py-3 text-sm">
+            Pay with Stripe ({config.currency}). Shipping address is collected on the Stripe
+            page and sent to Printify after payment. Card details never touch this site.
+            {!config.printifyReady
+              ? " Printify token is not set — test payments will succeed, but fulfillment waits on PRINTIFY_API_TOKEN."
+              : " Paid orders create a Printify job for Sublimation Crew Socks (EU)."}
+          </p>
+        )}
         <fieldset className="space-y-3">
           <legend className="font-mono text-[10px] tracking-[0.22em] text-cyan uppercase">
             Contact
           </legend>
-          <Field name="email" label="Email" type="email" placeholder="you@nabilsocks.com" />
-          <Field name="name" label="Full name" placeholder="Nabil Vale" />
-        </fieldset>
-        <fieldset className="space-y-3">
-          <legend className="font-mono text-[10px] tracking-[0.22em] text-cyan uppercase">
-            Shipping
-          </legend>
-          <Field name="address" label="Address" placeholder="88 Circuit Avenue" />
-          <div className="grid gap-3 sm:grid-cols-2">
-            <Field name="city" label="City" placeholder="Nightport" />
-            <Field name="zip" label="Postal code" placeholder="10011" />
-          </div>
-        </fieldset>
-        <fieldset className="space-y-3">
-          <legend className="font-mono text-[10px] tracking-[0.22em] text-cyan uppercase">
-            Payment theater
-          </legend>
-          <Field name="card" label="Card number" placeholder="4242 4242 4242 4242" />
-          <div className="grid gap-3 sm:grid-cols-2">
-            <Field name="expiry" label="Expiry" placeholder="12 / 29" />
-            <Field name="cvc" label="CVC" placeholder="123" />
-          </div>
+          <label className="block">
+            <span className="text-xs text-muted">Email (optional, prefills Stripe)</span>
+            <input
+              name="email"
+              type="email"
+              autoComplete="email"
+              placeholder="you@nabilsocks.com"
+              className="mt-1 w-full rounded-xl border border-white/12 bg-black/40 px-3 py-2.5 text-sm outline-none placeholder:text-muted/60 focus:border-cyan/50"
+            />
+          </label>
         </fieldset>
         {error ? (
           <p className="text-sm text-magenta" role="alert">
@@ -106,10 +131,10 @@ export function CheckoutForm() {
         ) : null}
         <button
           type="submit"
-          disabled={submitting}
+          disabled={submitting || !canPay}
           className="w-full rounded-full bg-cyan px-5 py-3 font-mono text-[11px] tracking-[0.2em] text-black uppercase disabled:opacity-60"
         >
-          {submitting ? "Transmitting…" : "Place demo order"}
+          {submitting ? "Opening Stripe…" : "Pay with Stripe"}
         </button>
       </div>
 
@@ -135,31 +160,11 @@ export function CheckoutForm() {
           <span className="text-muted">Total</span>
           <span className="font-display text-2xl">{formatPrice(subtotal)}</span>
         </div>
+        <p className="mt-3 text-xs text-muted">
+          Prices in {config.currency}. Production shipping is billed to Nabil Socks via Printify
+          (Halle, Germany).
+        </p>
       </aside>
     </form>
-  );
-}
-
-function Field({
-  name,
-  label,
-  placeholder,
-  type = "text",
-}: {
-  name: string;
-  label: string;
-  placeholder: string;
-  type?: string;
-}) {
-  return (
-    <label className="block">
-      <span className="text-xs text-muted">{label}</span>
-      <input
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        className="mt-1 w-full rounded-xl border border-white/12 bg-black/40 px-3 py-2.5 text-sm outline-none placeholder:text-muted/60 focus:border-cyan/50"
-      />
-    </label>
   );
 }

@@ -1,16 +1,21 @@
-export function formatPrice(amount: number) {
-  return new Intl.NumberFormat("en-US", {
+import { STORE_CURRENCY } from "./currency";
+
+export function formatPrice(amount: number, currency = STORE_CURRENCY) {
+  return new Intl.NumberFormat("de-CH", {
     style: "currency",
-    currency: "USD",
+    currency: currency.toUpperCase(),
     minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
   }).format(amount);
 }
 
-export function generateOrderId() {
-  const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  let token = "";
-  for (let i = 0; i < 6; i += 1) {
-    token += alphabet[Math.floor(Math.random() * alphabet.length)];
-  }
-  return `NS-${token}`;
+export function formatStripeTotal(
+  amountTotal: number | null | undefined,
+  currency: string | null | undefined,
+) {
+  if (amountTotal == null || !currency) return null;
+  return new Intl.NumberFormat("de-CH", {
+    style: "currency",
+    currency: currency.toUpperCase(),
+  }).format(amountTotal / 100);
 }
