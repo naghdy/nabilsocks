@@ -45,16 +45,15 @@ export function Footer() {
           </p>
           <p className="mt-3 text-sm text-muted">
             Specs match Printify Sublimation Crew Socks (EU) — all-over print,
-            black heel and toe tips, made in Halle. Checkout is still a demo —
-            no real payments, no live Printify orders, no personal data is sent
-            to a backend.
+            black heel and toe tips, made in Halle. Pay with Stripe; paid orders
+            go to Printify for production.
           </p>
         </div>
       </div>
       <div className="border-t border-white/6">
         <p className="mx-auto max-w-6xl px-4 py-4 font-mono text-[10px] tracking-[0.18em] text-muted uppercase sm:px-6">
           © {new Date().getFullYear()} Nabil Socks · nabilsocks.com · Printify
-          EU POD · Demo checkout
+          EU POD · Stripe Checkout
         </p>
       </div>
     </footer>

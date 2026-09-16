@@ -1,0 +1,42 @@
+{
+  "circuit-crew": {
+    "printifyProductId": "",
+    "variants": { "S": 0, "M": 0, "L": 0 }
+  },
+  "pulse-crew": {
+    "printifyProductId": "",
+    "variants": { "S": 0, "M": 0, "L": 0 }
+  },
+  "solar-flare": {
+    "printifyProductId": "",
+    "variants": { "S": 0, "M": 0, "L": 0 }
+  },
+  "void-walker": {
+    "printifyProductId": "",
+    "variants": { "S": 0, "M": 0, "L": 0 }
+  },
+  "glacier-crew": {
+    "printifyProductId": "",
+    "variants": { "S": 0, "M": 0, "L": 0 }
+  },
+  "chromatic-drift": {
+    "printifyProductId": "",
+    "variants": { "S": 0, "M": 0, "L": 0 }
+  },
+  "signal-noise": {
+    "printifyProductId": "",
+    "variants": { "S": 0, "M": 0, "L": 0 }
+  },
+  "ember-thread": {
+    "printifyProductId": "",
+    "variants": { "S": 0, "M": 0, "L": 0 }
+  },
+  "quiet-protocol": {
+    "printifyProductId": "",
+    "variants": { "S": 0, "M": 0, "L": 0 }
+  },
+  "orbit-stripe": {
+    "printifyProductId": "",
+    "variants": { "S": 0, "M": 0, "L": 0 }
+  }
+}

@@ -85,13 +85,4 @@ export const useCartStore = create<CartState>()(
   ),
 );
 
-export type LastOrder = {
-  id: string;
-  email: string;
-  city: string;
-  items: CartItem[];
-  total: number;
-  placedAt: string;
-};
 
-export const LAST_ORDER_KEY = "nabil-socks-last-order";

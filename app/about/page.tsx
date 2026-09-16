@@ -49,10 +49,10 @@ export default function AboutPage() {
           compresses the search until taste can speak.
         </p>
         <p>
-          This site is the public demo for <strong className="text-white">nabilsocks.com</strong>.
-          Product specs match the Printify EU blank so photos and listings can
-          match a real pair that ships to Switzerland. Checkout is still theater
-          until live orders are wired. The feeling is the product: shopping as a
+          This site is the public storefront for <strong className="text-white">nabilsocks.com</strong>.
+          Product specs match the Printify EU blank so photos and listings match
+          a real pair that ships to Switzerland. Checkout is Stripe; paid orders
+          are sent to Printify. The feeling is the product: shopping as a
           conversation, staged in neon and glass.
         </p>
       </div>
@@ -61,9 +61,9 @@ export default function AboutPage() {
           Protocol
         </p>
         <p className="mt-3 text-sm text-muted">
-          No Stripe keys. No Printify API yet. Cart lives in your browser. When
-          the domain points at Vercel, this is what the future of a sock store
-          looks like from the street.
+          Stripe Checkout in CHF. Printify API after payment. Cart lives in your
+          browser until you pay. Keys stay on the server — never in the client
+          bundle.
         </p>
         <Link
           href="/agent"

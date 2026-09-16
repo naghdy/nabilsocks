@@ -16,8 +16,7 @@ export default function ShopPage() {
       <p className="mt-3 max-w-xl text-muted">
         Ten crew designs on one Printify EU blank: all-over sublimation on calf
         and foot, black heel and toe tips, 70% polyester / 25% cotton / 5%
-        spandex. Limited drops do not restock — this is a demo, but the scarcity
-        still has a tone.
+        spandex. Limited drops do not restock.
       </p>
       <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((product, index) => (

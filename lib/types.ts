@@ -17,9 +17,14 @@ export type SockPattern =
   | "orbit";
 
 export type PrintifyMeta = {
+  /** Printify catalog blueprint id (496 = Sublimation Crew Socks EU). */
   productId: number;
   technique: "sublimation";
   baseModel: string;
+  /** Shop product id from Printify → My products. See `lib/printify-map.ts`. */
+  shopProductId?: string;
+  /** Shop variant ids per size. See `lib/printify-map.ts`. */
+  variants?: Partial<Record<SockSize, number>>;
 };
 
 export type Product = {
