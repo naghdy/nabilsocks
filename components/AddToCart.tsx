@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { SIZE_GUIDE, SIZES, type Product, type SockSize } from "@/lib/types";
+import { SizeGuide } from "@/components/SizeGuide";
+import { SIZE_GUIDE, SIZES, isSockSize, type Product, type SockSize } from "@/lib/types";
 import { useCartStore } from "@/lib/store";
 import { cn } from "@/lib/cn";
 
@@ -14,7 +15,9 @@ export function AddToCart({
   compact?: boolean;
   defaultSize?: SockSize;
 }) {
-  const [size, setSize] = useState<SockSize>(defaultSize);
+  const [size, setSize] = useState<SockSize>(
+    isSockSize(defaultSize) ? defaultSize : "M",
+  );
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
@@ -50,7 +53,10 @@ export function AddToCart({
           ))}
         </div>
         {!compact ? (
-          <p className="mt-2 text-xs text-muted">{SIZE_GUIDE[size]}</p>
+          <>
+            <p className="mt-2 text-xs text-muted">{SIZE_GUIDE[size]}</p>
+            <SizeGuide compact />
+          </>
         ) : null}
       </fieldset>
 

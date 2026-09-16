@@ -12,7 +12,8 @@ export default function CartPage() {
       <p className="font-mono text-[11px] tracking-[0.28em] text-cyan uppercase">Bag</p>
       <h1 className="font-display mt-2 text-5xl tracking-tight">Your selection</h1>
       <p className="mt-3 text-muted">
-        Update quantities, remove a pair, or continue to the demo gate.
+        Update quantities, remove a pair, or continue to the demo gate. Sizes
+        are M, L, and XL — the Printful Black Foot SKU has no S.
       </p>
       <div className="mt-8">
         <CartLines />

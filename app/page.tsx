@@ -64,8 +64,8 @@ export default function HomePage() {
           </h2>
           <p className="mt-4 max-w-md text-muted">
             Nabil is a client-side shopping agent. No API keys. It asks for
-            occasion, color, height, material, vibe — then pulls from the live
-            catalog and can add to your bag.
+            occasion, color, and vibe — every pair is the same Printful crew
+            blank — then pulls from the live catalog and can add to your bag.
           </p>
         </div>
         <AgentChat teaser />
@@ -93,7 +93,7 @@ export default function HomePage() {
       <section className="mx-auto w-full max-w-6xl px-4 pb-24 sm:px-6">
         <div className="glass grid gap-6 rounded-3xl p-6 sm:grid-cols-3 sm:p-8">
           {[
-            ["Listen", "Nabil collects signal: night, merino, quiet, glitch."],
+            ["Listen", "Nabil collects signal: night, cyan, quiet, glitch."],
             ["Match", "The catalog is scored, not filtered like a spreadsheet."],
             ["Close", "Bag it. Demo checkout. Fake order id. Zero charge."],
           ].map(([title, copy], i) => (

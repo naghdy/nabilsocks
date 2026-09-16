@@ -3,7 +3,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { getProductById } from "./products";
-import type { CartItem, SockSize } from "./types";
+import { isSockSize, type CartItem, type SockSize } from "./types";
 
 type CartState = {
   items: CartItem[];
@@ -24,6 +24,7 @@ export const useCartStore = create<CartState>()(
       hydrated: false,
       setHydrated: () => set({ hydrated: true }),
       addItem: (productId, size, qty = 1) => {
+        if (!isSockSize(size)) return;
         set((state) => {
           const existing = state.items.find(
             (item) => item.productId === productId && item.size === size,
@@ -69,7 +70,14 @@ export const useCartStore = create<CartState>()(
     }),
     {
       name: "nabil-socks-cart",
+      version: 2,
       partialize: (state) => ({ items: state.items }),
+      migrate: (persisted) => {
+        const state = persisted as { items?: CartItem[] };
+        return {
+          items: (state.items ?? []).filter((item) => isSockSize(item.size)),
+        };
+      },
       onRehydrateStorage: () => (state) => {
         state?.setHydrated();
       },

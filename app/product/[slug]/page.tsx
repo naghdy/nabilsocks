@@ -6,6 +6,12 @@ import { ProductCard } from "@/components/ProductCard";
 import { SockPhoto } from "@/components/SockPhoto";
 import { formatPrice } from "@/lib/format";
 import { formatHeight, formatMaterial, getProduct, products } from "@/lib/products";
+import {
+  BLANK_ORIGIN_COPY,
+  CARE_COPY,
+  FULFILLMENT_COPY,
+  PRINTFUL_CATALOG_URL,
+} from "@/lib/types";
 import type { Product } from "@/lib/types";
 
 function overlap(base: Product, other: Product) {
@@ -88,12 +94,54 @@ export default async function ProductPage({ params }: Props) {
               <dt className="font-mono text-[10px] tracking-[0.18em] text-muted uppercase">
                 Material
               </dt>
-              <dd className="mt-1 capitalize">{formatMaterial(product.material)}</dd>
+              <dd className="mt-1">{formatMaterial(product.material)}</dd>
+            </div>
+            <div className="glass rounded-2xl p-3">
+              <dt className="font-mono text-[10px] tracking-[0.18em] text-muted uppercase">
+                Print
+              </dt>
+              <dd className="mt-1">
+                Sublimation on the ribbed leg · black cushioned foot
+              </dd>
+            </div>
+            <div className="glass rounded-2xl p-3">
+              <dt className="font-mono text-[10px] tracking-[0.18em] text-muted uppercase">
+                Sizes
+              </dt>
+              <dd className="mt-1">M · L · XL</dd>
             </div>
           </dl>
 
           <div className="mt-8 max-w-sm">
             <AddToCart product={product} />
+          </div>
+
+          <div className="mt-8 max-w-lg space-y-3 text-sm text-muted">
+            <p>
+              <span className="font-mono text-[10px] tracking-[0.18em] text-white/70 uppercase">
+                Care
+              </span>
+              <span className="mt-1 block">{CARE_COPY}</span>
+            </p>
+            <p>
+              <span className="font-mono text-[10px] tracking-[0.18em] text-white/70 uppercase">
+                Fulfillment
+              </span>
+              <span className="mt-1 block">
+                {FULFILLMENT_COPY} Base model:{" "}
+                {product.printful?.baseModel ?? "Black Foot Sublimated Socks"}.{" "}
+                {BLANK_ORIGIN_COPY}{" "}
+                <a
+                  href={PRINTFUL_CATALOG_URL}
+                  className="text-cyan hover:underline"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Printful catalog
+                </a>
+                .
+              </span>
+            </p>
           </div>
         </div>
       </div>

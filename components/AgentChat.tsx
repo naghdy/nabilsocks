@@ -162,7 +162,7 @@ export function AgentChat({ teaser = false }: { teaser?: boolean }) {
             id={teaser ? "agent-teaser" : "agent-input"}
             value={input}
             onChange={(event) => setInput(event.target.value)}
-            placeholder="Merino, night out, surprise me…"
+            placeholder="Night out, cyan, surprise me…"
             className="min-w-0 flex-1 rounded-full border border-white/12 bg-black/40 px-4 py-2.5 text-sm outline-none placeholder:text-muted/70 focus:border-cyan/50"
             autoComplete="off"
           />
