@@ -87,8 +87,8 @@ function scoreProduct(product: Product, query: string) {
     if (product.vibe.includes("luxury") || product.vibe.includes("quiet"))
       score += 6;
   }
-  if (includesAny(query, ["cotton", "nylon", "spandex", "blend"])) {
-    if (product.material === "nylon-blend") score += 3;
+  if (includesAny(query, ["cotton", "polyester", "spandex", "blend", "poly"])) {
+    if (product.material === "poly-cotton-blend") score += 3;
   }
   if (includesAny(query, ["cyan", "blue", "electric", "ice", "glacier"])) {
     if (product.colors.some((c) => ["cyan", "blue", "ice", "electric"].includes(c)))
@@ -152,17 +152,18 @@ function findProductMention(query: string) {
 }
 
 function detectSize(query: string): SockSize {
-  if (/\bxl\b/.test(query) || query.includes("extra large")) return "XL";
+  if (/\bxl\b/.test(query) || query.includes("extra large")) return "L";
+  if (/\bs\b/.test(query) || query.includes("small")) return "S";
   if (/\bl\b/.test(query) || query.includes("large")) return "L";
   return "M";
 }
 
-function askedForSmall(query: string) {
-  return /\bsize s\b/.test(query) || /\bsmall\b/.test(query);
+function askedForXL(query: string) {
+  return /\bxl\b/.test(query) || query.includes("extra large");
 }
 
 const specDisclaimer =
-  "Every pair is Printful Black Foot Sublimated Socks: crew length, 60% nylon / 22% cotton / 18% spandex, sublimation on the ribbed leg, cushioned black foot. Sizes M, L, XL only.";
+  "Every pair is Printify Sublimation Crew Socks (EU): crew length, 70% polyester / 25% cotton / 5% spandex, all-over dye sublimation on calf and foot, black heel and toe tips only. Sizes S, M, L.";
 
 export const starterChips = [
   "Night out",
@@ -174,7 +175,7 @@ export const starterChips = [
 ];
 
 export function openingMessage() {
-  return "I'm Nabil. I don't browse catalogs — I listen. Occasion, color, vibe. The whole grid is crew-length Printful sublimation — I'll pull a pair that matches how you move. Or say add Circuit Crew if you already know.";
+  return "I'm Nabil. I don't browse catalogs — I listen. Occasion, color, vibe. The whole grid is crew-length Printify EU sublimation — I'll pull a pair that matches how you move. Or say add Circuit Crew if you already know.";
 }
 
 export function replyTo(raw: string): AgentReply {
@@ -191,7 +192,7 @@ export function replyTo(raw: string): AgentReply {
 
   if (includesAny(query, ["checkout", "pay", "buy now"])) {
     return {
-      text: "Cart is ready when you are. This checkout is a demo — no real charge, no real card captured, and Printful is not wired yet. I'll walk you to the gate.",
+      text: "Cart is ready when you are. This checkout is a demo — no real charge, no real card captured, and Printify is not wired yet. I'll walk you to the gate.",
       products: [],
       action: { type: "navigate", href: "/checkout" },
     };
@@ -217,11 +218,11 @@ export function replyTo(raw: string): AgentReply {
 
   if (addIntent && mentioned) {
     const size = detectSize(query);
-    const smallNote = askedForSmall(query)
-      ? " This SKU has no S — Printful Black Foot starts at M. Bagged M unless you named L or XL."
+    const xlNote = askedForXL(query)
+      ? " This SKU has no XL — Printify EU crew tops out at L. Bagged L unless you named S or M."
       : "";
     return {
-      text: `Placed ${mentioned.name} in ${size} into the bag.${smallNote} Demo inventory, real taste. Want a second pair or shall I walk you to checkout?`,
+      text: `Placed ${mentioned.name} in ${size} into the bag.${xlNote} Demo inventory, real taste. Want a second pair or shall I walk you to checkout?`,
       products: [mentioned],
       action: { type: "add", product: mentioned, size },
     };
@@ -239,7 +240,7 @@ export function replyTo(raw: string): AgentReply {
 
   if (greetings.some((g) => query === g || query.startsWith(`${g} `))) {
     return {
-      text: "Signal received. Tell me how you move — run, boardroom, night, lounge — or name a color and I'll do the rest. Whole catalog is crew, Printful black-foot blanks.",
+      text: "Signal received. Tell me how you move — run, boardroom, night, lounge — or name a color and I'll do the rest. Whole catalog is crew, Printify EU all-over sublimation with black heel and toe tips.",
       products: products.filter((p) => p.limited),
       action: { type: "none" },
     };
@@ -301,7 +302,7 @@ export function replyTo(raw: string): AgentReply {
   }
 
   return {
-    text: `${flavor} Lead pick is ${top.name} — ${top.tagline} Say add ${top.name} to bag it in M, or name L or XL.`,
+    text: `${flavor} Lead pick is ${top.name} — ${top.tagline} Say add ${top.name} to bag it in M, or name S or L.`,
     products: picks,
     action: { type: "none" },
   };

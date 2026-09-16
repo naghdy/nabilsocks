@@ -13,7 +13,7 @@ export default function CartPage() {
       <h1 className="font-display mt-2 text-5xl tracking-tight">Your selection</h1>
       <p className="mt-3 text-muted">
         Update quantities, remove a pair, or continue to the demo gate. Sizes
-        are M, L, and XL — the Printful Black Foot SKU has no S.
+        are S, M, and L — the Printify EU crew has no XL.
       </p>
       <div className="mt-8">
         <CartLines />

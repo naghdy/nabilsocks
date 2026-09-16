@@ -64,7 +64,7 @@ export default function HomePage() {
           </h2>
           <p className="mt-4 max-w-md text-muted">
             Nabil is a client-side shopping agent. No API keys. It asks for
-            occasion, color, and vibe — every pair is the same Printful crew
+            occasion, color, and vibe — every pair is the same Printify EU crew
             blank — then pulls from the live catalog and can add to your bag.
           </p>
         </div>

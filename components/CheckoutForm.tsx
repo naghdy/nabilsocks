@@ -68,9 +68,9 @@ export function CheckoutForm() {
     >
       <div className="glass space-y-5 rounded-3xl p-5 sm:p-6">
         <p className="rounded-2xl border border-magenta/30 bg-magenta/8 px-4 py-3 text-sm">
-          Demo checkout — no charge, no live Printful order. Cards are not
-          processed, stored, or sent anywhere. Catalog specs are the real Black
-          Foot Sublimated Socks blank (crew, M–XL).
+          Demo checkout — no charge, no live Printify order. Cards are not
+          processed, stored, or sent anywhere. Catalog specs are the real
+          Sublimation Crew Socks (EU) blank (crew, S–L, black heel and toe).
         </p>
         <fieldset className="space-y-3">
           <legend className="font-mono text-[10px] tracking-[0.22em] text-cyan uppercase">

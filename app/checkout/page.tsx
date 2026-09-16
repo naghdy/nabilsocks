@@ -16,8 +16,8 @@ export default function CheckoutPage() {
       <p className="mt-3 max-w-xl text-muted">
         Shipping and payment fields exist so the ritual feels complete. Submit
         and you get a souvenir order id — never a charge. Pairs are specified as
-        Printful Black Foot Sublimated Socks; this demo does not place a live
-        Printful order.
+        Printify Sublimation Crew Socks (EU); this demo does not place a live
+        Printify order.
       </p>
       <div className="mt-8">
         <CheckoutForm />

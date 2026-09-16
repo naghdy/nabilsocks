@@ -70,7 +70,7 @@ export const useCartStore = create<CartState>()(
     }),
     {
       name: "nabil-socks-cart",
-      version: 2,
+      version: 3,
       partialize: (state) => ({ items: state.items }),
       migrate: (persisted) => {
         const state = persisted as { items?: CartItem[] };

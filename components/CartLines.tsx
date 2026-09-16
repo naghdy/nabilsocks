@@ -110,8 +110,8 @@ export function CartLines() {
           <p className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">Subtotal</p>
           <p className="font-display text-3xl">{formatPrice(subtotal)}</p>
           <p className="text-xs text-muted">
-            Demo shipping is listed as complimentary. Live Printful fulfill is
-            typically 2–5 business days, then shipping.
+            Demo shipping is listed as complimentary. Live Printify EU production
+            is typically 2–7 business days, then shipping.
           </p>
         </div>
         <Link

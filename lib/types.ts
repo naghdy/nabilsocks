@@ -1,8 +1,8 @@
 export type SockHeight = "crew";
 
-export type Material = "nylon-blend" | "printful-sublimation";
+export type Material = "poly-cotton-blend" | "printify-sublimation";
 
-export type SockSize = "M" | "L" | "XL";
+export type SockSize = "S" | "M" | "L";
 
 export type SockPattern =
   | "circuit"
@@ -16,7 +16,7 @@ export type SockPattern =
   | "quiet"
   | "orbit";
 
-export type PrintfulMeta = {
+export type PrintifyMeta = {
   productId: number;
   technique: "sublimation";
   baseModel: string;
@@ -36,7 +36,7 @@ export type Product = {
   occasion: string[];
   limited?: boolean;
   aliases?: string[];
-  printful?: PrintfulMeta;
+  printify?: PrintifyMeta;
   art: {
     pattern: SockPattern;
     primary: string;
@@ -51,49 +51,77 @@ export type CartItem = {
   qty: number;
 };
 
-/** Printful catalog product 186 — Black Foot Sublimated Socks. */
-export const PRINTFUL_SOCKS: PrintfulMeta = {
-  productId: 186,
+/** Printify catalog product 496 — Sublimation Crew Socks (EU), Textildruck Europa. */
+export const PRINTIFY_SOCKS: PrintifyMeta = {
+  productId: 496,
   technique: "sublimation",
-  baseModel: "Black Foot Sublimated Socks",
+  baseModel: "Sublimation Crew Socks (EU)",
 };
 
-export const PRINTFUL_CATALOG_URL =
-  "https://www.printful.com/custom/socks/personalized/black-foot-sublimated-socks";
+export const PRINTIFY_CATALOG_URL =
+  "https://printify.com/app/products/496/generic-brand/sublimation-crew-socks-eu";
 
-export const MATERIAL_COMPOSITION = "60% nylon / 22% cotton / 18% spandex";
+export const PRINTIFY_PROVIDER = "Textildruck Europa (Halle, Germany)";
+
+export const MATERIAL_COMPOSITION = "70% polyester / 25% cotton / 5% spandex";
 
 export const MATERIAL_LABEL: Record<Material, string> = {
-  "nylon-blend": MATERIAL_COMPOSITION,
-  "printful-sublimation": MATERIAL_COMPOSITION,
+  "poly-cotton-blend": MATERIAL_COMPOSITION,
+  "printify-sublimation": MATERIAL_COMPOSITION,
 };
 
 export const CARE_COPY =
-  "Machine wash ≤30°C with like colors. Do not bleach. Do not dry clean.";
+  "Machine wash inside out ≤30°C / 90°F with like colors. Do not bleach. Do not dry clean. Avoid ironing.";
 
 export const FULFILLMENT_COPY =
-  "Print-on-demand via Printful. Typical fulfill is about 2–5 business days, then shipping.";
+  "Print-on-demand via Printify. Produced in Halle, Germany (Textildruck Europa). Typical production is 2–7 business days, then shipping from the EU — including to Switzerland.";
 
 export const BLANK_ORIGIN_COPY =
-  "Blanks are sourced from China, then printed to order.";
+  "EU production, no minimum order. Polyester exterior for dye sublimation, cotton interior for next-to-skin comfort. Heel tip and toe tip remain black.";
 
-export const SIZES: SockSize[] = ["M", "L", "XL"];
+export const SIZES: SockSize[] = ["S", "M", "L"];
 
+/**
+ * Official Printify size chart for product 496 (Sublimation Crew Socks EU).
+ * US men / US women / EU from Printify. UK derived as US men − 1
+ * (Printify does not publish UK for this SKU). Length/width also from Printify.
+ */
 export const SIZE_GUIDE: Record<SockSize, string> = {
-  M: "US men 7–8 / US women 9–10 / EU 39–41 / UK 6–8",
-  L: "US men 9–12 / US women 10–13 / EU 42–46 / UK 8–11",
-  XL: "US men 12–15 / US women 14–17 / EU 46–49 / UK 12–15",
+  S: "US men 3–5 / US women 4–6 / EU 35–38 / UK 2–4",
+  M: "US men 6–10 / US women 7–10 / EU 38–41 / UK 5–9",
+  L: "US men 10–13 / US women 11–14 / EU 41–45 / UK 9–12",
 };
 
 export const SIZE_CHART: Record<
   SockSize,
-  { usMen: string; usWomen: string; eu: string; uk: string }
+  { usMen: string; usWomen: string; eu: string; uk: string; lengthIn: string; widthIn: string }
 > = {
-  M: { usMen: "7–8", usWomen: "9–10", eu: "39–41", uk: "6–8" },
-  L: { usMen: "9–12", usWomen: "10–13", eu: "42–46", uk: "8–11" },
-  XL: { usMen: "12–15", usWomen: "14–17", eu: "46–49", uk: "12–15" },
+  S: {
+    usMen: "3–5",
+    usWomen: "4–6",
+    eu: "35–38",
+    uk: "2–4",
+    lengthIn: "14.17",
+    widthIn: "3.94",
+  },
+  M: {
+    usMen: "6–10",
+    usWomen: "7–10",
+    eu: "38–41",
+    uk: "5–9",
+    lengthIn: "17.32",
+    widthIn: "3.94",
+  },
+  L: {
+    usMen: "10–13",
+    usWomen: "11–14",
+    eu: "41–45",
+    uk: "9–12",
+    lengthIn: "18.50",
+    widthIn: "3.94",
+  },
 };
 
 export function isSockSize(value: unknown): value is SockSize {
-  return value === "M" || value === "L" || value === "XL";
+  return value === "S" || value === "M" || value === "L";
 }
