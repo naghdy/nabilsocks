@@ -1,45 +1,24 @@
 #!/usr/bin/env node
 /**
- * Dump Printify shop products into the nabilsocks slug → product/variant map.
+ * Fill S/M/L variant ids from Printify product JSON.
  *
  * Usage:
- *   PRINTIFY_API_TOKEN=... PRINTIFY_SHOP_ID=... npm run printify:dump-map
- *   PRINTIFY_API_TOKEN=... PRINTIFY_SHOP_ID=... npm run printify:dump-map -- --write
+ *   PRINTIFY_API_TOKEN=... npm run printify:dump-map
+ *   PRINTIFY_API_TOKEN=... npm run printify:dump-map -- --write
+ *
+ * Hits GET /v1/shops/{shop_id}/products/{product_id}.json for each known
+ * shop product id in lib/printify-map.json (shop 28967994 by default).
  */
-import { writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const SLUG_BY_NAME = {
-  "circuit crew": "circuit-crew",
-  "pulse crew": "pulse-crew",
-  "solar flare": "solar-flare",
-  "void walker": "void-walker",
-  "glacier crew": "glacier-crew",
-  "chromatic drift": "chromatic-drift",
-  "signal noise": "signal-noise",
-  "ember thread": "ember-thread",
-  "quiet protocol": "quiet-protocol",
-  "orbit stripe": "orbit-stripe",
-};
-
+const DEFAULT_SHOP_ID = "28967994";
 const SIZES = ["S", "M", "L"];
+const UNSAFE_SKU_DIGITS = 16;
 
-function normalize(value) {
-  return String(value || "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, " ")
-    .trim();
-}
-
-function slugForProduct(product) {
-  const title = normalize(product.title);
-  if (SLUG_BY_NAME[title]) return SLUG_BY_NAME[title];
-  for (const [name, slug] of Object.entries(SLUG_BY_NAME)) {
-    if (title.includes(name)) return slug;
-  }
-  return null;
-}
+const dir = dirname(fileURLToPath(import.meta.url));
+const mapPath = join(dir, "../lib/printify-map.json");
 
 function sizeFromVariantTitle(title) {
   const tokens = String(title || "")
@@ -56,67 +35,84 @@ function sizeFromVariantTitle(title) {
   return match ? match[1] : null;
 }
 
-async function listProducts(token, shopId) {
-  const products = [];
-  for (let page = 1; page <= 10; page += 1) {
-    const response = await fetch(
-      `https://api.printify.com/v1/shops/${shopId}/products.json?limit=50&page=${page}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-        },
-      },
-    );
-    if (!response.ok) {
-      throw new Error(`Printify products list failed (${response.status}): ${await response.text()}`);
-    }
-    const body = await response.json();
-    products.push(...(body.data || []));
-    if (page >= (body.last_page || page)) break;
+function asSafeVariantId(value) {
+  const asString = String(value ?? "").trim();
+  if (!/^\d+$/.test(asString) || asString.length >= UNSAFE_SKU_DIGITS) {
+    return 0;
   }
-  return products;
+  const n = Number(asString);
+  return Number.isSafeInteger(n) && n > 0 ? n : 0;
 }
 
-function buildMap(products) {
-  const map = {};
-  for (const slug of Object.values(SLUG_BY_NAME)) {
-    map[slug] = { printifyProductId: "", variants: { S: 0, M: 0, L: 0 } };
+async function getProduct(token, shopId, productId) {
+  const response = await fetch(
+    `https://api.printify.com/v1/shops/${shopId}/products/${productId}.json`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+      },
+    },
+  );
+  if (!response.ok) {
+    throw new Error(
+      `GET /v1/shops/${shopId}/products/${productId}.json failed (${response.status}): ${await response.text()}`,
+    );
   }
-  for (const product of products) {
-    const slug = slugForProduct(product);
-    if (!slug) continue;
-    const variants = { S: 0, M: 0, L: 0 };
-    for (const variant of product.variants || []) {
-      const size = sizeFromVariantTitle(variant.title);
-      if (size && (variant.is_enabled !== false)) {
-        variants[size] = Number(variant.id) || 0;
-      }
-    }
-    map[slug] = {
-      printifyProductId: String(product.id),
-      variants,
-    };
-  }
-  return map;
+  return response.json();
 }
 
 async function main() {
   const token = process.env.PRINTIFY_API_TOKEN;
-  const shopId = process.env.PRINTIFY_SHOP_ID;
-  if (!token || !shopId) {
-    console.error("Set PRINTIFY_API_TOKEN and PRINTIFY_SHOP_ID.");
+  const shopId = process.env.PRINTIFY_SHOP_ID || DEFAULT_SHOP_ID;
+  if (!token) {
+    console.error("Set PRINTIFY_API_TOKEN. Then this script GETs each product JSON for variant ids.");
     process.exit(1);
   }
-  const products = await listProducts(token, shopId);
-  const map = buildMap(products);
+
+  const map = JSON.parse(readFileSync(mapPath, "utf8"));
+  const warnings = [];
+
+  for (const [slug, entry] of Object.entries(map)) {
+    const productId = entry.printifyProductId;
+    if (!productId) {
+      warnings.push(`${slug}: missing printifyProductId`);
+      continue;
+    }
+    const product = await getProduct(token, shopId, productId);
+    const variants = { S: 0, M: 0, L: 0 };
+    for (const variant of product.variants || []) {
+      const size = sizeFromVariantTitle(variant.title);
+      if (!size) continue;
+      const id = asSafeVariantId(variant.id);
+      if (!id) {
+        warnings.push(
+          `${slug} ${size}: skipped id ${variant.id} (looks like a SKU, not an API variant_id)`,
+        );
+        continue;
+      }
+      variants[size] = id;
+    }
+    map[slug] = {
+      printifyProductId: String(product.id || productId),
+      variants,
+    };
+    if (!variants.S || !variants.M || !variants.L) {
+      warnings.push(
+        `${slug}: incomplete variants ${JSON.stringify(variants)} — inspect GET /v1/shops/${shopId}/products/${productId}.json`,
+      );
+    }
+  }
+
   const json = `${JSON.stringify(map, null, 2)}\n`;
   process.stdout.write(json);
+  if (warnings.length) {
+    console.error("Warnings:");
+    for (const warning of warnings) console.error(`  ${warning}`);
+  }
   if (process.argv.includes("--write")) {
-    const dir = dirname(fileURLToPath(import.meta.url));
-    const target = join(dir, "../lib/printify-map.json");
-    writeFileSync(target, json);
-    console.error(`Wrote ${target}`);
+    writeFileSync(mapPath, json);
+    console.error(`Wrote ${mapPath}`);
   }
 }
 

@@ -1,5 +1,7 @@
 import "server-only";
 
+import { PRINTIFY_SHOP_ID_DEFAULT } from "./printify-map";
+
 const PRINTIFY_API = "https://api.printify.com/v1";
 
 export class PrintifyError extends Error {
@@ -61,7 +63,8 @@ export type PrintifyOrderList = {
 
 function getCredentials() {
   const token = process.env.PRINTIFY_API_TOKEN?.trim();
-  const shopId = process.env.PRINTIFY_SHOP_ID?.trim();
+  const shopId =
+    process.env.PRINTIFY_SHOP_ID?.trim() || PRINTIFY_SHOP_ID_DEFAULT;
   if (!token || !shopId) return null;
   return { token, shopId };
 }

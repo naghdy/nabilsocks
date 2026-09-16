@@ -96,11 +96,11 @@ export function CheckoutForm({
           </p>
         ) : liveBlocked ? (
           <p className="rounded-2xl border border-magenta/30 bg-magenta/8 px-4 py-3 text-sm" role="alert">
-            Live Stripe keys are set, but Printify is not ready. Fill{" "}
-            <code className="font-mono text-cyan">PRINTIFY_API_TOKEN</code>,{" "}
-            <code className="font-mono text-cyan">PRINTIFY_SHOP_ID</code>, and{" "}
-            <code className="font-mono text-cyan">lib/printify-map.json</code> before taking live
-            payments.
+            Live Stripe keys are set, but Printify fulfillment is not ready. Set{" "}
+            <code className="font-mono text-cyan">PRINTIFY_API_TOKEN</code> and fill S/M/L{" "}
+            <code className="font-mono text-cyan">variant_id</code>s in{" "}
+            <code className="font-mono text-cyan">lib/printify-map.json</code> (see README)
+            before taking live payments.
           </p>
         ) : (
           <p className="rounded-2xl border border-cyan/25 bg-cyan/8 px-4 py-3 text-sm">

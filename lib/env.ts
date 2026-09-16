@@ -13,9 +13,7 @@ export function isStripeWebhookConfigured() {
 }
 
 export function isPrintifyConfigured() {
-  return Boolean(
-    process.env.PRINTIFY_API_TOKEN?.trim() && process.env.PRINTIFY_SHOP_ID?.trim(),
-  );
+  return Boolean(process.env.PRINTIFY_API_TOKEN?.trim());
 }
 
 export function missingStripeMessage() {
@@ -23,5 +21,5 @@ export function missingStripeMessage() {
 }
 
 export function missingPrintifyMessage() {
-  return "Printify is not configured. Set PRINTIFY_API_TOKEN and PRINTIFY_SHOP_ID. See .env.example.";
+  return "Printify is not configured. Set PRINTIFY_API_TOKEN. PRINTIFY_SHOP_ID defaults to 28967994. See .env.example.";
 }
