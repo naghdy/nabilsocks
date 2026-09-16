@@ -10,7 +10,7 @@ import {
   BLANK_ORIGIN_COPY,
   CARE_COPY,
   FULFILLMENT_COPY,
-  PRINTFUL_CATALOG_URL,
+  PRINTIFY_CATALOG_URL,
 } from "@/lib/types";
 import type { Product } from "@/lib/types";
 
@@ -101,14 +101,14 @@ export default async function ProductPage({ params }: Props) {
                 Print
               </dt>
               <dd className="mt-1">
-                Sublimation on the ribbed leg · black cushioned foot
+                All-over sublimation · black heel + toe tips
               </dd>
             </div>
             <div className="glass rounded-2xl p-3">
               <dt className="font-mono text-[10px] tracking-[0.18em] text-muted uppercase">
                 Sizes
               </dt>
-              <dd className="mt-1">M · L · XL</dd>
+              <dd className="mt-1">S · M · L</dd>
             </div>
           </dl>
 
@@ -129,15 +129,15 @@ export default async function ProductPage({ params }: Props) {
               </span>
               <span className="mt-1 block">
                 {FULFILLMENT_COPY} Base model:{" "}
-                {product.printful?.baseModel ?? "Black Foot Sublimated Socks"}.{" "}
+                {product.printify?.baseModel ?? "Sublimation Crew Socks (EU)"}.{" "}
                 {BLANK_ORIGIN_COPY}{" "}
                 <a
-                  href={PRINTFUL_CATALOG_URL}
+                  href={PRINTIFY_CATALOG_URL}
                   className="text-cyan hover:underline"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Printful catalog
+                  Printify catalog
                 </a>
                 .
               </span>

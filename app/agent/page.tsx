@@ -21,7 +21,8 @@ export default function AgentPage() {
         <p className="mt-3 max-w-xl text-muted">
           Scripted, catalog-aware, and a little cinematic. Ask for a night out,
           a quiet cream crew, a glitch, or say add Circuit Crew. Nothing leaves
-          the browser. The grid is Printful Black Foot — crew, M–XL.
+          the browser. The grid is Printify EU AOP — crew, S–L, black heel and
+          toe tips.
         </p>
         <div className="mt-8">
           <AgentChat />

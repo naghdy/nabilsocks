@@ -4,16 +4,20 @@ A next-generation **agentic** sock storefront for [nabilsocks.com](https://nabil
 
 This is a production-feeling demo: dark glass, neon, client-side cart, and a scripted shopping agent that recommends from the live catalog.
 
-## Fulfillment partner: Printful
+## Fulfillment partner: Printify (EU)
 
-Every listing is specified against **[Black Foot Sublimated Socks](https://www.printful.com/custom/socks/personalized/black-foot-sublimated-socks)** (Printful catalog product `186`):
+Every listing is specified against **[Sublimation Crew Socks (EU)](https://printify.com/app/products/496/generic-brand/sublimation-crew-socks-eu)** (Printify catalog product `496`, provider **Textildruck Europa**, Halle, Germany):
 
-- Crew length, cushioned black foot, ribbed leg, sublimation print on the upper
-- **60% nylon / 22% cotton / 18% spandex**
-- Sizes **M, L, XL** only
-- Print-on-demand / made to order (typical fulfill ~2–5 business days, then shipping)
+- Crew length, 1/8" ribbed tube, dye-sublimation all-over print on calf **and** foot
+- **Black heel tip + black toe tip only** (not a full black foot)
+- **70% polyester / 25% cotton / 5% spandex** — polyester exterior, cotton interior
+- Sizes **S, M, L** (official Printify US/EU chart; UK derived as US men − 1)
+- No minimum order; EU production that can ship to Switzerland
+- Typical production ~2–7 business days, then shipping
 
-The storefront is **not** wired to the Printful API yet. Checkout remains a demo: no live orders are placed.
+The storefront is **not** wired to the Printify API yet. Checkout remains a demo: no live orders are placed.
+
+Retail prices stay in the **$26–34** range against a ~$12 base cost.
 
 ## Stack
 
@@ -42,12 +46,12 @@ No environment variables are required.
 ## Demo flows
 
 1. **Landing** — brand, agent teaser, featured pairs
-2. **Shop** — 10 crew designs with CSS/SVG art (no remote images)
-3. **Product** — size (M / L / XL), quantity, add to bag, Printful size guide + care
+2. **Shop** — 10 crew designs photographed on the Printify EU AOP blank
+3. **Product** — size (S / M / L), quantity, add to bag, Printify size guide + care
 4. **Agent** (`/agent`) — ask for occasion / color / vibe; say `add Circuit Crew` to bag a pair
 5. **Cart** — update qty, remove
 6. **Checkout** — shipping + payment theater; success screen with a fake order id
-7. **About** — brand story + honest Printful specs
+7. **About** — brand story + honest Printify EU specs
 
 Checkout never charges a card. Fields are not sent to a processor.
 
@@ -82,8 +86,9 @@ After Vercel marks the domain valid, `https://nabilsocks.com` serves this app.
 
 ```
 app/            routes (shop, product, agent, cart, checkout, about)
-components/     chrome, sock art, agent, cart, checkout
+components/     chrome, sock photos, agent, cart, checkout
 lib/            products, agent matcher, cart store
+public/products photoreal SKUs restyled to the Printify EU blank
 ```
 
 ## License

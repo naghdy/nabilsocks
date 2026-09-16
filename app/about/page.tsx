@@ -5,7 +5,8 @@ import {
   CARE_COPY,
   FULFILLMENT_COPY,
   MATERIAL_COMPOSITION,
-  PRINTFUL_CATALOG_URL,
+  PRINTIFY_CATALOG_URL,
+  PRINTIFY_PROVIDER,
 } from "@/lib/types";
 
 export const metadata: Metadata = {
@@ -30,17 +31,18 @@ export default function AboutPage() {
         </p>
         <p>
           The designs are ours — circuit, pulse, flare, void. The physical sock
-          is honest: every pair is Printful{" "}
+          is honest: every pair is Printify{" "}
           <a
-            href={PRINTFUL_CATALOG_URL}
+            href={PRINTIFY_CATALOG_URL}
             className="text-cyan hover:underline"
             target="_blank"
             rel="noreferrer"
           >
-            Black Foot Sublimated Socks
+            Sublimation Crew Socks (EU)
           </a>
-          . Crew length. {MATERIAL_COMPOSITION}. Sublimation graphics on the
-          ribbed leg; cushioned black foot underneath. Sizes M, L, and XL.
+          , fulfilled by {PRINTIFY_PROVIDER}. Crew length. {MATERIAL_COMPOSITION}.
+          All-over dye sublimation on the ribbed calf and most of the foot; heel
+          tip and toe tip remain black. Sizes S, M, and L.
         </p>
         <p>
           Then we put an agent on the floor. Nabil does not replace taste. It
@@ -48,8 +50,9 @@ export default function AboutPage() {
         </p>
         <p>
           This site is the public demo for <strong className="text-white">nabilsocks.com</strong>.
-          Product specs match the Printful blank. Checkout is still theater until
-          live orders are wired. The feeling is the product: shopping as a
+          Product specs match the Printify EU blank so photos and listings can
+          match a real pair that ships to Switzerland. Checkout is still theater
+          until live orders are wired. The feeling is the product: shopping as a
           conversation, staged in neon and glass.
         </p>
       </div>
@@ -58,7 +61,7 @@ export default function AboutPage() {
           Protocol
         </p>
         <p className="mt-3 text-sm text-muted">
-          No Stripe keys. No Printful API yet. Cart lives in your browser. When
+          No Stripe keys. No Printify API yet. Cart lives in your browser. When
           the domain points at Vercel, this is what the future of a sock store
           looks like from the street.
         </p>

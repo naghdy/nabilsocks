@@ -1,28 +1,28 @@
 import {
   MATERIAL_LABEL,
-  PRINTFUL_SOCKS,
+  PRINTIFY_SOCKS,
   type Material,
   type Product,
   type SockHeight,
 } from "./types";
 
-const printful = PRINTFUL_SOCKS;
+const printify = PRINTIFY_SOCKS;
 
 export const products: Product[] = [
   {
     id: "circuit-crew",
     slug: "circuit-crew",
     name: "Circuit Crew",
-    tagline: "Printed like a motherboard. Black foot stays dark.",
+    tagline: "Printed like a motherboard. Black heel and toe stay dark.",
     description:
-      "Void-black crew mapped with electric cyan traces — sublimation on the ribbed leg, cushioned black foot left unprinted. Circuit Crew is the house signature: infrastructure until it moves, then it reads as light. Same Printful Black Foot blank as the rest of the grid, made to order.",
+      "Void-black crew mapped with electric cyan traces — dye sublimation across the ribbed calf and most of the foot. Only the heel tip and toe tip stay black. Circuit Crew is the house signature: infrastructure until it moves, then it reads as light. Same Printify Sublimation Crew Socks (EU) blank as the rest of the grid, made to order in Germany.",
     price: 28,
     height: "crew",
-    material: "nylon-blend",
+    material: "poly-cotton-blend",
     colors: ["black", "cyan", "electric"],
     vibe: ["tech", "cyber", "loud", "daily"],
     occasion: ["city", "night", "travel", "gift"],
-    printful,
+    printify,
     art: {
       pattern: "circuit",
       primary: "#071018",
@@ -36,15 +36,15 @@ export const products: Product[] = [
     name: "Pulse Crew",
     tagline: "A heartbeat printed as an ankle-band graphic.",
     description:
-      "Midnight crew with a magenta pulse that rings the ankle like a vital sign — graphics live on the ribbed upper; the cushioned foot stays black. Crew length, high signal. For rooms where the lighting is expensive and the conversation is not.",
+      "Midnight crew with a magenta pulse that rings the ankle like a vital sign — graphics wrap the ribbed tube and the printed foot; heel and toe tips stay black. Crew length, high signal. For rooms where the lighting is expensive and the conversation is not.",
     price: 32,
     height: "crew",
-    material: "nylon-blend",
+    material: "poly-cotton-blend",
     colors: ["black", "magenta", "midnight"],
     vibe: ["luxury", "night", "loud"],
     occasion: ["date", "night", "party", "gift"],
     aliases: ["pulse ankle", "pulse-ankle", "pulse"],
-    printful,
+    printify,
     art: {
       pattern: "pulse",
       primary: "#0a0610",
@@ -58,15 +58,15 @@ export const products: Product[] = [
     name: "Solar Flare",
     tagline: "A limited burn across a ribbed crew.",
     description:
-      "Gold collapses into ember as the rib catches light. Solar Flare is a numbered drop — sublimated flare on the crew leg, dense rib, cushioned black foot. Nylon-cotton-spandex blend, printed to order. When it’s gone, the sun keeps moving.",
+      "Gold collapses into ember as the rib catches light. Solar Flare is a numbered drop — all-over sublimated flare on calf and foot, dense 1/8\" rib, black heel and toe tips only. 70% polyester / 25% cotton / 5% spandex, printed to order in the EU. When it’s gone, the sun keeps moving.",
     price: 32,
     height: "crew",
-    material: "nylon-blend",
+    material: "poly-cotton-blend",
     colors: ["gold", "orange", "ember"],
     vibe: ["warm", "loud", "limited"],
     occasion: ["weekend", "travel", "gift"],
     limited: true,
-    printful,
+    printify,
     art: {
       pattern: "flare",
       primary: "#2a1206",
@@ -80,14 +80,14 @@ export const products: Product[] = [
     name: "Void Walker",
     tagline: "A crew starfield for people who stay out past the map.",
     description:
-      "Deep-violet crew that drinks the room and returns a faint starfield on the ribbed leg. Void Walker is not a knee-high — it is crew length with space printed on the upper and a black cushioned foot below. Late trains, later studios, no small talk.",
+      "Deep-violet crew that drinks the room and returns a faint starfield across the ribbed leg and printed foot. Void Walker is not a knee-high — it is crew length with space printed all-over except black heel and toe tips. Late trains, later studios, no small talk.",
     price: 34,
     height: "crew",
-    material: "nylon-blend",
+    material: "poly-cotton-blend",
     colors: ["purple", "violet", "black"],
     vibe: ["night", "cyber", "quiet", "editorial"],
     occasion: ["night", "studio", "travel"],
-    printful,
+    printify,
     art: {
       pattern: "void",
       primary: "#12081c",
@@ -101,15 +101,15 @@ export const products: Product[] = [
     name: "Glacier Crew",
     tagline: "Ice you can wear above the shoe.",
     description:
-      "Ice-blue crystalline structure sublimated up a ribbed crew. Glacier is no longer a no-show — it is an ice design you can actually see, with a cushioned black foot and a cool athletic read. Nylon blend, printed to order, built for days that forgot to end.",
+      "Ice-blue crystalline structure sublimated up a ribbed crew and across the foot. Glacier is no longer a no-show — it is an ice design you can actually see, with black heel and toe tips and a cool athletic read. Poly-cotton blend, printed to order in Halle, built for days that forgot to end.",
     price: 27,
     height: "crew",
-    material: "nylon-blend",
+    material: "poly-cotton-blend",
     colors: ["ice", "blue", "white"],
     vibe: ["athletic", "minimal", "quiet", "cool"],
     occasion: ["run", "gym", "travel", "daily"],
     aliases: ["glacier no-show", "glacier-no-show", "glacier noshow", "glacier"],
-    printful,
+    printify,
     art: {
       pattern: "glacier",
       primary: "#d8f4ff",
@@ -123,14 +123,14 @@ export const products: Product[] = [
     name: "Chromatic Drift",
     tagline: "A crew that refuses a single color.",
     description:
-      "A crew that drifts as you turn — cyan into magenta into a color that doesn’t have a name yet, all of it sublimated on the ribbed leg. Black cushioned foot underneath. Drift is for people who treat dressing as weather.",
+      "A crew that drifts as you turn — cyan into magenta into a color that doesn’t have a name yet, all of it dye-sublimated on the ribbed calf and the foot. Black heel and toe tips only. Drift is for people who treat dressing as weather.",
     price: 34,
     height: "crew",
-    material: "nylon-blend",
+    material: "poly-cotton-blend",
     colors: ["cyan", "magenta", "iridescent"],
     vibe: ["loud", "chromatic", "daily"],
     occasion: ["weekend", "party", "gift", "city"],
-    printful,
+    printify,
     art: {
       pattern: "chromatic",
       primary: "#14081a",
@@ -144,15 +144,15 @@ export const products: Product[] = [
     name: "Signal Noise",
     tagline: "A limited glitch. Intentionally broken.",
     description:
-      "Torn blocks of cyan, magenta, and void sublimated like a corrupted frame. Signal Noise is a drop for people who like their errors beautiful. Crew length, ribbed leg, cushioned black foot. Once the batch ends, the file is deleted.",
+      "Torn blocks of cyan, magenta, and void sublimated like a corrupted frame. Signal Noise is a drop for people who like their errors beautiful. Crew length, ribbed tube, all-over print, black heel and toe tips. Once the batch ends, the file is deleted.",
     price: 30,
     height: "crew",
-    material: "nylon-blend",
+    material: "poly-cotton-blend",
     colors: ["black", "cyan", "magenta"],
     vibe: ["glitch", "loud", "tech", "limited"],
     occasion: ["night", "party", "gift"],
     limited: true,
-    printful,
+    printify,
     art: {
       pattern: "glitch",
       primary: "#07070c",
@@ -166,14 +166,14 @@ export const products: Product[] = [
     name: "Ember Thread",
     tagline: "Rust print for streets that remember autumn.",
     description:
-      "A crew the color of a cooling furnace. Ember Thread is a slow-burn sublimation on the ribbed leg — no logos, no neon, just mineral warmth in the graphic and a black cushioned foot below. For walks that start as errands and become thinking.",
+      "A crew the color of a cooling furnace. Ember Thread is a slow-burn all-over sublimation — no logos, no neon, just mineral warmth wrapping calf and foot, with black heel and toe tips. For walks that start as errands and become thinking.",
     price: 29,
     height: "crew",
-    material: "nylon-blend",
+    material: "poly-cotton-blend",
     colors: ["rust", "orange", "brown"],
     vibe: ["warm", "quiet", "editorial"],
     occasion: ["weekend", "travel", "daily"],
-    printful,
+    printify,
     art: {
       pattern: "ember",
       primary: "#2a1008",
@@ -187,14 +187,14 @@ export const products: Product[] = [
     name: "Quiet Protocol",
     tagline: "Off-white crew. Boardroom stealth.",
     description:
-      "The pair you wear when the room is listening. Quiet Protocol is a cream-field sublimation on a ribbed crew — almost cream, almost nothing — with a black cushioned foot that stays out of the conversation. Formal without announcing the protocol.",
+      "The pair you wear when the room is listening. Quiet Protocol is a cream-field sublimation on a ribbed crew — almost cream, almost nothing — wrapping calf and foot, with black heel and toe tips that stay out of the conversation. Formal without announcing the protocol.",
     price: 33,
     height: "crew",
-    material: "nylon-blend",
+    material: "poly-cotton-blend",
     colors: ["cream", "white", "ivory"],
     vibe: ["quiet", "luxury", "minimal"],
     occasion: ["work", "boardroom", "date", "gift"],
-    printful,
+    printify,
     art: {
       pattern: "quiet",
       primary: "#f3efe6",
@@ -208,14 +208,14 @@ export const products: Product[] = [
     name: "Orbit Stripe",
     tagline: "Athletic crew. Two bodies, one gravity.",
     description:
-      "Cyan and magenta bands lock in orbit around a graphite field on the ribbed leg. Orbit Stripe is the training crew — stay-up rib, black cushioned foot, a little theater for people who still treat motion as a ritual. Run, lift, or just leave the building faster.",
+      "Cyan and magenta bands lock in orbit around a graphite field on the ribbed tube and printed foot. Orbit Stripe is the training crew — stay-up rib, black heel and toe tips, a little theater for people who still treat motion as a ritual. Run, lift, or just leave the building faster.",
     price: 26,
     height: "crew",
-    material: "nylon-blend",
+    material: "poly-cotton-blend",
     colors: ["cyan", "magenta", "graphite"],
     vibe: ["athletic", "loud", "daily"],
     occasion: ["run", "gym", "travel", "daily"],
-    printful,
+    printify,
     art: {
       pattern: "orbit",
       primary: "#101018",
@@ -242,7 +242,7 @@ export function formatMaterial(material: Material) {
 }
 
 export function formatMaterialShort(material: Material) {
-  return material === "printful-sublimation" ? "sublimated nylon" : "nylon blend";
+  return material === "printify-sublimation" ? "sublimated poly" : "poly-cotton";
 }
 
 export const featuredSlugs = [

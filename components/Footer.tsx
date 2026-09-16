@@ -9,7 +9,7 @@ export function Footer() {
           <Logo />
           <p className="max-w-xs text-sm text-muted">
             Agentic retail for nabilsocks.com. The store listens first, then
-            recommends a crew from the Printful black-foot grid.
+            recommends a crew from the Printify EU all-over grid.
           </p>
         </div>
         <div>
@@ -44,16 +44,17 @@ export function Footer() {
             Fulfillment
           </p>
           <p className="mt-3 text-sm text-muted">
-            Specs match Printful Black Foot Sublimated Socks (print-on-demand).
-            Checkout is still a demo — no real payments, no live Printful orders,
-            no personal data is sent to a backend.
+            Specs match Printify Sublimation Crew Socks (EU) — all-over print,
+            black heel and toe tips, made in Halle. Checkout is still a demo —
+            no real payments, no live Printify orders, no personal data is sent
+            to a backend.
           </p>
         </div>
       </div>
       <div className="border-t border-white/6">
         <p className="mx-auto max-w-6xl px-4 py-4 font-mono text-[10px] tracking-[0.18em] text-muted uppercase sm:px-6">
-          © {new Date().getFullYear()} Nabil Socks · nabilsocks.com · Printful
-          POD · Demo checkout
+          © {new Date().getFullYear()} Nabil Socks · nabilsocks.com · Printify
+          EU POD · Demo checkout
         </p>
       </div>
     </footer>

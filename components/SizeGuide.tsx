@@ -20,7 +20,8 @@ export function SizeGuide({ compact = false }: { compact?: boolean }) {
               <th className="pb-2 pr-3 font-normal">US men</th>
               <th className="pb-2 pr-3 font-normal">US women</th>
               <th className="pb-2 pr-3 font-normal">EU</th>
-              <th className="pb-2 font-normal">UK</th>
+              <th className="pb-2 pr-3 font-normal">UK</th>
+              <th className="pb-2 font-normal">Length</th>
             </tr>
           </thead>
           <tbody>
@@ -32,7 +33,8 @@ export function SizeGuide({ compact = false }: { compact?: boolean }) {
                   <td className="py-1.5 pr-3">{row.usMen}</td>
                   <td className="py-1.5 pr-3">{row.usWomen}</td>
                   <td className="py-1.5 pr-3">{row.eu}</td>
-                  <td className="py-1.5">{row.uk}</td>
+                  <td className="py-1.5 pr-3">{row.uk}</td>
+                  <td className="py-1.5">{row.lengthIn}&nbsp;in</td>
                 </tr>
               );
             })}
@@ -40,7 +42,8 @@ export function SizeGuide({ compact = false }: { compact?: boolean }) {
         </table>
         {!compact ? (
           <p className="mt-2 text-[11px] leading-relaxed text-muted">
-            Printful Black Foot Sublimated Socks — M, L, XL only. {FULFILLMENT_COPY}{" "}
+            Printify Sublimation Crew Socks (EU) — S, M, L. US/EU from the
+            official Printify chart; UK is US men − 1. {FULFILLMENT_COPY}{" "}
             {CARE_COPY} {BLANK_ORIGIN_COPY}
           </p>
         ) : null}

@@ -40,7 +40,7 @@ export function SuccessPanel() {
       </p>
       <h1 className="font-display mt-3 text-4xl">Order staged.</h1>
       <p className="mt-3 text-sm text-muted">
-        Demo only — no charge, no shipment, no card captured, no live Printful
+        Demo only — no charge, no shipment, no card captured, no live Printify
         order. Keep the number as a souvenir.
       </p>
       <p className="font-display mt-8 text-3xl text-cyan">{id}</p>
