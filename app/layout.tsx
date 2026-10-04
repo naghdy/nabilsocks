@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist_Mono, Outfit, Syne } from "next/font/google";
 import { Atmosphere } from "@/components/Atmosphere";
 import { CartHydration } from "@/components/CartHydration";
+import { Clarity } from "@/components/Clarity";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import "./globals.css";
@@ -71,6 +72,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
+        <Clarity />
         <Atmosphere />
         <CartHydration />
         <div className="relative z-10 flex min-h-full flex-1 flex-col">
