@@ -1,6 +1,20 @@
 # Nabil Socks
 
-A next-generation **agentic** sock storefront for [nabilsocks.com](https://nabilsocks.com). Talk to Nabil, browse the catalog, bag a pair, and pay with **Stripe Checkout**. Paid orders are fulfilled through the **Printify API** (Sublimation Crew Socks EU, Textildruck Europa).
+A next-generation **agentic** sock storefront for [nabilsocks.com](https://www.nabilsocks.com). Talk to Nabil, browse the catalog, bag a pair, and pay with **Stripe Checkout**. Paid orders are fulfilled through the **Printify API** (Sublimation Crew Socks EU, Textildruck Europa).
+
+**Agents:** start at [AGENTS.md](AGENTS.md). Project context is in [docs/](docs/):
+
+- [Overview](docs/OVERVIEW.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Hosting and deploy](docs/HOSTING_AND_DEPLOY.md)
+- [Payments (Stripe)](docs/PAYMENTS_STRIPE.md)
+- [Fulfillment (Printify)](docs/FULFILLMENT_PRINTIFY.md)
+- [Environment](docs/ENVIRONMENT.md)
+- [History](docs/HISTORY.md)
+- [Runbook](docs/RUNBOOK.md)
+- [Open items](docs/OPEN_ITEMS.md)
+
+If this README and `docs/` disagree, trust the code, then `docs/`.
 
 ## Fulfillment partner: Printify (EU)
 
@@ -61,7 +75,7 @@ Copy `.env.example`. Never put secrets in client code or `NEXT_PUBLIC_*` except 
 ### Stripe test vs live
 
 - **Test:** `sk_test_…` / `pk_test_…`, card `4242 4242 4242 4242`. Webhook secret from `stripe listen` or the test endpoint in the Dashboard. Printify orders are created but **not** sent to production unless you set `PRINTIFY_SEND_TO_PRODUCTION=true`.
-- **Live:** `sk_live_…` / `pk_live_…`. The create-session route **refuses live charges** until Printify credentials **and** a complete product map are present.
+- **Live:** `sk_live_…` / `pk_live_…`, or a restricted `rk_live_…` (what production uses). The create-session route refuses charges only when the secret **starts with `sk_live_`** and Printify is not ready. An `rk_live_` key does not trip that guard. Live Checkout Sessions still have `livemode: true`, so Printify `send_to_production` runs unless `PRINTIFY_SEND_TO_PRODUCTION=false`. See [docs/PAYMENTS_STRIPE.md](docs/PAYMENTS_STRIPE.md).
 
 Local webhook forwarding:
 
@@ -76,8 +90,10 @@ Use the `whsec_…` it prints as `STRIPE_WEBHOOK_SECRET`.
 In Stripe Dashboard → Developers → Webhooks, add:
 
 ```
-https://nabilsocks.com/api/webhooks/stripe
+https://www.nabilsocks.com/api/webhooks/stripe
 ```
+
+Use the `www` host. The apex 308-redirects to www, and Stripe does not follow redirects. See [docs/HOSTING_AND_DEPLOY.md](docs/HOSTING_AND_DEPLOY.md) and [docs/PAYMENTS_STRIPE.md](docs/PAYMENTS_STRIPE.md).
 
 For Vercel previews, either use Stripe CLI or add the preview URL. Events to send:
 
@@ -165,14 +181,14 @@ Namecheap **URL Redirect / forwarding** will 301 the domain and break the brand 
 
    | Type  | Host | Value                 | TTL        |
    | ----- | ---- | --------------------- | ---------- |
-   | A     | `@`  | `10.0.1.2`          | Automatic  |
+   | A     | `@`  | `76.76.21.21`         | Automatic  |
    | CNAME | `www`| `cname.vercel-dns.com`| Automatic  |
 
    If Vercel shows different values, use those. They are the source of truth.
 5. Save. Propagation can take from minutes to a few hours.
 6. Keep the Namecheap nameservers as Namecheap’s (or your DNS host). You are pointing records **to** Vercel, not transferring the domain.
 
-After Vercel marks the domain valid, `https://nabilsocks.com` serves this app.
+After Vercel marks the domain valid, `https://www.nabilsocks.com` serves this app. Apex `nabilsocks.com` 308-redirects to `www` in Vercel Domains. Team `madar` (`madaret`), project `nabilsocks`. Framework Preset must be **Next.js**. Details: [docs/HOSTING_AND_DEPLOY.md](docs/HOSTING_AND_DEPLOY.md).
 
 ## Project layout
 
